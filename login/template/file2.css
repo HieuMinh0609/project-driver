@@ -1,0 +1,192 @@
+#contaiter{
+    margin: 0 auto;
+    width: 900px;
+    height: auto;
+    background: url('../image/photo-1482049016688-2d3e1b311543.jpg');
+        border-radius: 17px;
+    border: 3px solid #8ece8e;
+    background-size:100%,100%;
+    color: white;
+}
+ 
+
+a{
+   
+    text-decoration: none;
+    color: white;
+}
+
+.dthongbao p{
+    color: #FF5722;
+    background-color: #FFEB3B;
+    text-align: center;
+    border-radius: 6px;
+    height: 30px;
+    text-align: center;
+    padding-top: 4px;
+}
+
+#contaiter a{
+text-decoration: none;
+    color: white
+}
+
+input{
+    color: #547948 !important;
+}
+
+.tab {
+    
+text-decoration: none;
+    
+background:#8ece8e;
+    
+padding: 10px;
+    
+padding-left: 12px;
+    
+padding-right: 12px;
+    
+display: inline-block;
+    
+border-radius: 4px;
+    
+box-shadow: inset 0px 0px 6px 2px #6c6c77;
+    
+margin-left:10px;
+    
+margin-top: 2px;
+}
+ 
+
+
+
+h2{
+    
+    text-align:center;
+    margin-top: 60px;
+    margin-bottom: 1px;
+
+}
+.inputclass{
+    
+margin: 6px;
+    
+padding: 8px;
+    
+width: 350px;
+    
+border-radius: 16px;
+    
+border: 0;
+}
+.divdangky1{
+        margin-left: 90px;
+        
+}
+.divdangnhap1{
+     margin-left: 90px;
+     display:none;
+        
+}
+.listnghenghiep{
+    
+    margin: 10px;
+}
+#gioitinh{
+    margin:10px;
+    
+}
+.dangkysumbit{
+    
+background-color: #8ece8e;
+    
+margin: 20px;
+    
+padding: 10px;
+    
+padding-left: 30px;
+    
+padding-right: 30px;
+    
+border-radius: 5px;
+    
+cursor:pointer;
+    
+box-shadow: inset 0px 0px 6px 2px #6c6c77;
+    
+color: white;
+border:none;
+}
+.dangkysumbit2{
+    background-color: #8ece8e;
+    margin: 20px;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 5px;
+    cursor:pointer;
+    box-shadow: inset 0px 0px 6px 2px #6c6c77;
+     color: white;
+    border:none;
+}
+#linkdangnhap{
+    margin:20px;
+    text-decoration:none;
+    color: blue;
+
+}
+#linkdangnhap:hover{
+    
+    color:red;
+}
+#linkdangnhap2{
+    margin:20px;
+    text-decoration:none;
+    color: blue;
+
+}
+#linkdangnhap2:hover{
+
+    color:red;
+}
+.tieude{
+    margin-right: 100px;
+    
+}
+#dangkysumbit:hover{
+     
+    color:red;
+}
+#pthongbao{
+    
+    display: none;
+    background: yellow;
+    margin-right: 100px;
+    padding: 6px;
+    color: red;
+}
+#pthongbao2{
+
+    display: none;
+    background: yellow;
+     padding: 6px;
+    color: red;
+}
+#thongbaogioitinh{  
+    display: none;
+    font-size: 15px;
+    padding: 6px;
+    color: red;
+}
+#thongbaotuoi{
+    display: none;
+    font-size: 15px;
+    padding: 6px;
+    color: red;
+    
+}
+
+.forgot_pass:hover{
+    color: red;
+}

@@ -1,0 +1,237 @@
+#location{
+	margin: 0 auto;
+    width: 800px;
+    height: auto;
+    background: #ffffff1f;
+    border: #fff solid 2px;
+	box-sizing: border-box;
+    box-shadow: 1px 1px 4px 0px #666;
+    padding-left: 0 !important;
+     padding-right:0 !important;
+}
+@media (max-width: 575.98px) { 
+
+	#location{
+	margin: 0 auto;
+    width: 479px;
+    height: auto;
+    background: #ffffff1f;
+    border: #fff solid 2px;
+	box-sizing: border-box;
+    box-shadow: 1px 1px 4px 0px #666;
+    padding-left: 0 !important;
+     padding-right:0 !important;
+}
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	
+	#location{
+	margin: 0 auto;
+    width: 479px;
+    height: auto;
+    background: #ffffff1f;
+    border: #fff solid 2px;
+	box-sizing: border-box;
+    box-shadow: 1px 1px 4px 0px #666;
+    padding-left: 0 !important;
+     padding-right:0 !important;
+}
+
+ }
+
+@media (min-width: 768px) and (max-width: 991.98px) {  
+
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {  
+
+}
+
+@media (min-width: 1200px) {
+
+ }
+#location_regiter{
+	margin: 0 auto;
+    width: 800px;
+    height: auto;
+    background: #ffffff1f;
+    border: #fff solid 2px;
+	box-sizing: border-box;
+    box-shadow: 1px 1px 4px 0px #666;
+    padding-left: 0 !important;
+     padding-right:0 !important;
+}
+ 
+#config_col{
+	padding-left: 0 !important;
+     padding-right:0 !important;
+}
+.img_login{
+	padding-left: 0 !important;
+	opacity: 0.7;
+}
+.input_name {
+
+	font-family: Poppins-Medium;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #666666;
+    display: block;
+    width: 100%;
+    background: #e6e6e6;
+    height: 50px;
+    border-radius: 25px;
+    padding: 0 30px 0 68px;
+}
+.radio{
+	line-height: 1.5;
+    color: #666666;
+    display: block;
+    width: 100%;
+    background: #e6e6e6;
+    height: 50px;
+    border-radius: 25px;
+    padding: 15px 30px 0 68px;
+    padding-left: 26px !important;
+}
+.loginname{
+	margin-bottom: 10px;
+	position: relative;
+}
+.input_pass{
+	font-family: Poppins-Medium;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #666666;
+    display: block;
+    width: 100%;
+    background: #e6e6e6;
+    height: 50px;
+    border-radius: 25px;
+    padding: 0 30px 0 68px;
+}
+input {
+    outline: none;
+    border: none;
+}
+.symbol-input100{
+	font-size: 15px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-left: 35px;
+    pointer-events: none;
+    color: #666666;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+.focus-input100{
+	display: block;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 0px 0px;
+    color: rgba(87,184,70, 0.8);
+}
+input:focus {
+	background: #5cb85c40;
+}
+.buton_login{
+	width: 100%;
+    
+   
+    justify-content: center;
+    padding-top: 20px;
+}
+.buton_save{
+	width: 20%;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding-top: 20px;
+}
+.login_btn_form{
+	font-family: Montserrat-Bold;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #fff;
+    text-transform: uppercase;
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    background: #57b846;
+    align-items: center;
+    padding: 0 25px;
+    
+}
+button{
+	outline: none !important;
+    border: none
+}
+.login100_form_title{
+	color: #57b846
+}
+.login100_form_title2{
+	color: #57b846;
+}
+ 
+.titel_lo_re{
+	font-family:  Montserrat-Bold;
+    font-size: 24px;
+    color:#66666699;
+    line-height: 1.2;
+    margin-top: 10px;
+    width: 100%;
+    display: block;
+    padding-bottom: 54px;
+    padding-left: 35px;
+	cursor:default;
+}
+
+.input_name:focus + .focus-input100 + .symbol-input100 {
+  color: #57b846;
+  padding-left: 30px;
+}
+.text_wellcome{
+	font-family:  Montserrat-Bold;
+    font-size: 24px;
+    color:#66666699;
+    position: absolute;
+	top: 22%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+.set_text_wel{
+	color: #fff;
+	letter-spacing:1.6rem;
+   text-transform: uppercase;
+   backface-visibility: hidden;
+   margin-bottom: 6rem;
+   opacity: 0.6;
+
+}
+label{
+	font-family:  Montserrat-Bold;
+    font-size: 15px;
+    color:#666666;
+	position: relative;
+	float: left;
+	margin-left:27px;
+}
