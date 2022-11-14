@@ -165,7 +165,7 @@
 				$row_tksp = mysqli_fetch_assoc($result_tksp);
 				$total_records_tksp = $row_tksp['total'];
 				echo $total_records_tksp;
-				if($input_timkiem != ''){
+				if($input_timkiem != '') {
 					
 					if($total_records_tksp != 0){
 						echo "<script>  	

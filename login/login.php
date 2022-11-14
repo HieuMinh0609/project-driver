@@ -2,35 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Đăng nhập</title>
 
     <script type="text/javascript" src="../admin/content/jquery-3.4.1.min.js"></script>
      <link rel="stylesheet"  type="text/css" href="../admin/content/bootstrap-3.1.1-dist/css/bootstrap.min.css">
      <script type="text/javascript" src="../admin/content/bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>   
-         <link rel="stylesheet" type="text/css" href="template/file2.css">
+     <link rel="stylesheet" type="text/css" href="template/login.css">
+
 </head>
 <body>
     <div class="container">
 <?php
     include '../lib/auth.php';
     require_once("../lib/db.php");
-    require("../lib/MemberService.php");
+    require("../lib/service/user_service.php");
 
 
 
 if(isset($_POST['register'])){
     $timenow = date('Y-m-d H:i:s');
     $conn = db_connect();
-        createMember($conn, 
-            escapePostParam($conn, "namelogin"), 
-            escapePostParam($conn,"namefull"), 
-            md5(escapePostParam($conn,"password")),
-             $timenow, 
-            '1', 
-            escapePostParam($conn,"sex"), 
+        createUser($conn, 
+            escapePostParam($conn, "username"), 
+            md5(escapePostParam($conn,"password")), 
+            1, 
+            escapePostParam($conn,"email"), 
             escapePostParam($conn,"address"),
-            escapePostParam($conn,"phonenumber"));    
-        db_close($conn);
+            escapePostParam($conn,"phone"), 
+            escapePostParam($conn,"gender"), 
+            escapePostParam($conn,"full_name"),
+            $timenow, 'USER');    
+
+    db_close($conn);
 }
 
 
@@ -61,22 +64,22 @@ if(isset($_POST['register'])){
     $resultMess="";
     if(isset($_POST["login"])) {
      $conn = db_connect();
-        $username =  escapePostParam($conn, "namelogin");
+        $username =  escapePostParam($conn, "username");
         $password =  escapePostParam($conn, "password");
       
         $user = md5($password);
-         echo $user;
+        echo $user;
         if(!doLogin($conn,$username, md5($password))) {
-            $resultMess ="Invalid username or password!";
-        }else{
+            $resultMess ="Tài khoản hoặc mật khẩu không đúng !";
+        } else {
             $isMember = isMember($conn,$username, md5($password));
-            $result=  $isMember['idrole'];
+            $result =  $isMember['role'];
         }
         if($resultMess==""){
-              if('2'==$result){
+              if('ADMIN'==$result){
             redirect("../admin/viewhome/HomePage.php");
-        }else if('1'==$result) {
-            redirect("../user/layout/layout/layout.php");
+        }else if('USER'==$result) {
+            redirect("../user/layout/index.php");
         }
          
         }
@@ -97,11 +100,11 @@ if(isset($_POST['register'])){
         <div id="divdangnhap" class="divdangnhap1" style="display: block">
             <form class="fmdangky" action="login.php" method="post">
                 <div class="tieude">
-                    <h2>Thành viên đăng nhập</h2>
+                    <h2>Đăng nhập</h2>
                     <hr>
                 </div>
                 <?php 
-                if( $resultMess!=""){
+                if( $resultMess!="") {
 
                 echo("<div class=\"dthongbao\" style=\"margin-right: 100px;\">
                 <p >".$resultMess."</p>             
@@ -109,16 +112,16 @@ if(isset($_POST['register'])){
                 }
                  ?>
 
-                <table>
+                <table  class="form-login">
 
                     <tr>
                         <td>Tên đăng nhập:</td>
-                        <td><input required type="text" name="namelogin" id="tendangnhap" class="inputclass"></td>
+                        <td><input required type="text" name="username" id="tendangnhap" class="form-control"></td>
                     </tr>
 
                     <tr>
                         <td>Mật khẩu: </td>
-                        <td><input required type="password" name="password" id="matkhau" class="inputclass"></td>
+                        <td><input required type="password" name="password" id="matkhau" class="form-control"></td>
                     </tr>
                     </tr>
                    
@@ -137,7 +140,7 @@ if(isset($_POST['register'])){
 
                     <tr>
                         <td colspan="3" style="text-align:center">
-                            Bạn chưa có tài khoản? vui lòng đăng ký<a id="linkdangnhap" href="#" onclick="ondangky()">Đăng Kí</a>
+                            Bạn chưa có tài khoản? vui lòng đăng ký
                         </td>
                     </tr>
                 </table>
@@ -147,38 +150,42 @@ if(isset($_POST['register'])){
         <div id="divdangky" class="divdangky1" style="display: none">
             <form id="fmdangky" action="login.php" method="post">
                 <div class="tieude">
-                    <h2>Đăng ký thành viên</h2>
+                    <h2>Đăng ký tài khoản</h2>
                     <hr>
                 </div>
                 <div class="dthongbao" style="margin-right: 100px;">
                     <p id="pthongbao2" style="color: red ; background-color: yellow; text-align: center;" ></p>
                 </div>
 
-                <table>
+                <table class="form-login">
 
                     <tr>
                         <td>Tên đăng nhập:</td>
-                        <td><input required id="inputnamelogin"  name="namelogin" type="text" id="tendangky"  class="inputclass"></td>
+                        <td><input required id="inputnamelogin"  name="username" type="text" id="tendangky"  class="form-control"></td>
                     </tr>
                     <tr>
                         <td>Mật khẩu: </td>
-                        <td><input required name="password" type="text" class="inputclass"></td>
+                        <td><input required name="password" type="text" class="form-control"></td>
                     </tr>
                     <tr>
                         <td>Tên đầy đủ: </td>
-                        <td><input required type="text" name="namefull" class="inputclass"></td>
+                        <td><input required type="text" name="full_name" class="form-control"></td>
                     </tr>
                     <tr>
                         <td>Địa chỉ</td>
-                        <td><input required type="text" name="address" class="inputclass"></td>
+                        <td><input required type="text" name="address" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td><input required type="email" name="email" class="form-control"></td>
                     </tr>
                     <tr>
                         <td>Số điện thoại: </td>
-                        <td><input required type="text" name="phonenumber"  class="inputclass"></td>
+                        <td><input required type="text" name="phone"  class="form-control"></td>
                     </tr>
                     <td> Giới tính: </td>
-                    <td><input type="radio" value="1" id="nam" name="sex">&emsp;Nam</input>&emsp;
-                        <input type="radio" id="nu" value="0" name="sex">&emsp;Nữ</input>
+                    <td><input type="radio" value="1" id="nam" name="gender">&emsp;Nam</input>&emsp;
+                        <input type="radio" id="nu" value="0" name="gender">&emsp;Nữ</input>
                     </td>
                     <tr>
                         <td colspan="3" style="text-align:center"><span id="thongbaogioitinh"></span>   </td>
@@ -191,7 +198,7 @@ if(isset($_POST['register'])){
                     </tr>
                     <tr>
                         <td colspan="3" style="text-align:center">
-                            Bạn đã có tài khoản? vui lòng chọn<a id="linkdangnhap2" href="#" onclick="ondangnhap()">Đăng nhập</a>
+                            Bạn đã có tài khoản? vui lòng chọn đăng ký
                         </td>
                     </tr>
                 </table>
@@ -203,7 +210,7 @@ if(isset($_POST['register'])){
     </div>
     <script>
     
-    function forgot_pass(){
+    function forgot_pass() {
            $t_email = prompt("Nhập email bạn", '');
            $t_namelogin = prompt("Nhập name login bạn", '');
            $t_phone = prompt("Nhập phone number bạn", '');
@@ -213,20 +220,17 @@ if(isset($_POST['register'])){
             dataArray["email"]= $t_email;
             dataArray["namelogin"]= $t_namelogin;
             dataArray["phone"]=$t_phone;
-        $.ajax({
-        url : 'ajax/ResetPassword.php',
-        type : 'post',
-        dataType : 'json',
-        data : {'email': $t_email , 'phone': $t_phone ,'namelogin' : $t_namelogin},
-        success : function (result)
-        {
-            if(result==1){
-                alert("Success! check email of you");
-            }else{
-                 alert("Wrong! name login or phone not true");
-            }
-            
-        
+            $.ajax({
+            url : 'ajax/ResetPassword.php',
+            type : 'post',
+            dataType : 'json',
+            data : {'email': $t_email , 'phone': $t_phone ,'namelogin' : $t_namelogin},
+            success : function (result) {
+                if(result==1){
+                    alert("Success! check email of you");
+                }else{
+                    alert("Wrong! name login or phone not true");
+                }
         },
         error: function (result){
             alert("Wrong! name login or phone not true");       
@@ -257,7 +261,8 @@ if(isset($_POST['register'])){
         divdk.style.display="block";
         divdn.style.display="none";
     }
-    function ondangnhap(){
+
+    function ondangnhap() {
 
         var divdk= document.getElementById("divdangky");
         var divdn= document.getElementById("divdangnhap");

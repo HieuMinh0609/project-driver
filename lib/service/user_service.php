@@ -1,5 +1,5 @@
 <?php
-require_once 'db.php';
+require_once("../lib/db.php");
 
 function getAllMember($conn) {
 	return db_query($conn, "SELECT * FROM bill");
@@ -27,26 +27,25 @@ function findPropertyMember($conn,$mapArray,$offset="",$limit="") {
 }
 
 
-function createMember($conn, $namelogin, $fullname,$password,$createdate,$idrole,$sex,$address,$phone) {
-	db_query_Member($conn, "INSERT INTO `member`(`namelogin`, `fullname`,`password`, `createdate`,`idrole`, `sex`,`address`, `phone`) VALUES ('$namelogin','$fullname','$password','$createdate','$idrole','$sex','$address','$phone')");
-
-
+function createUser($conn, $username, $password,$status,$email,$address ,$phone,$gender, $full_name, $created_date, $role) {
+	db_query_user($conn, "INSERT INTO `user`(`username`, `password`,`status`, `email`,`address`, `phone`,`gender`, `full_name`, `created_date`, `role`) 
+	VALUES ('$username', '$password', '$status', '$email', '$address' , '$phone', '$gender', '$full_name', '$created_date', '$role')");
 }
 
 
 
-function db_query_Member($conn, $query) {
+function db_query_user($conn, $query) {
 	$result1 = mysqli_query($conn, $query);
 	if(!$result1) {
 		  echo ("<br><div class=\"alert alert-danger alert-dismissible fade in\">
         <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</button>
-        <strong>Wrong!</strong> Check phone number or namelogin have been used.
+        <strong>Lỗi!</strong> Có lỗi sảy ra
         </div>");
         
-	}else{
+	} else {
 		 echo ("<br><div class=\"alert alert-success alert-dismissible fade in\">
         <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</button>
-        <strong>Success!</strong>  You have successfully implemented.
+        <strong>Thành công!</strong>  Bạn đã thực hiện thành công !
         </div>");
 	}
 	return $result1;
@@ -54,11 +53,7 @@ function db_query_Member($conn, $query) {
 
 
 function updateMember($conn,$id, $namelogin, $fullname,$password,$idrole,$sex,$address,$phone) {
-	 
-	 
-	 db_query_Member($conn, "UPDATE `member` SET `namelogin`='$namelogin',`fullname`='$fullname',`password`='$password',`idrole`='$idrole',`sex`='$sex',`address`='$address',`phone`='$phone'  WHERE idmember = $id");
-
-	
+	 db_query_Member($conn, "UPDATE `member` SET `namelogin`='$namelogin',`fullname`='$fullname',`password`='$password',`idrole`='$idrole',`sex`='$sex',`address`='$address',`phone`='$phone'  WHERE idmember = $id");	
 }
 
 function deleteMember($conn, $id) { 
@@ -67,11 +62,7 @@ function deleteMember($conn, $id) {
 }
 
 function updatePassword($conn,$password,$phone) {
-	 
-	 
 	 db_query($conn, "UPDATE `member` SET password='$password'  WHERE phone = '$phone'");
-
-	
 } 
 
 

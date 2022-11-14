@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Flowers.com</title>
+	<title>Driver</title>
 	<link rel="stylesheet" href="../../bootstrap/css/style.css">
 	<link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../../bootstrap/js/bootstrap.min.js">
@@ -15,20 +15,12 @@
 
 	<div class="center">
 		
-		<?php include_once('../include/banner.php') ?>
-		<div class="center-bottom"><br><br>
-			<?php include_once('../product/douong_product.php') ?>
-			<br>
-			<?php include_once('../product/doan_fast_product.php') ?>
-			<br>
-			<?php include_once('../product/doan_hot_product.php') ?>
-			
-			
-		</div>
+		 
 		<?php 
 			include_once ('../../lib/db.php');
 			include_once ('../../lib/controls.php');
 			include_once ('../../lib/cart_service.php');
+			
 			$con =db_connect();
 			if(isset($_POST['submit_timkiem'])){
 				$input_timkiem = $_POST['input_timkiem'];

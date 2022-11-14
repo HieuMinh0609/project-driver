@@ -13,7 +13,7 @@ function doLogin($conn,$username, $password){
 		$_SESSION["username"] = $username;
 
 		startSession();
-		$_SESSION["idrole"] =$isMember['idrole'] ;
+		$_SESSION["role"] =$isMember['role'] ;
 
 		 if(!isset($_COOKIE['username']) && !isset($_COOKIE['password'])){
 		 	setcookie("username", $username_cookie, time() + (86400 * 30), "/");
@@ -34,14 +34,14 @@ function checkLoggedInWeb() {
 
 function checkLoggedInAdmin() {
 	startSession();
-	 if(!isset($_SESSION["username"]) && ($_SESSION["idrole"])!='2') {
+	 if(!isset($_SESSION["username"]) && ($_SESSION["role"])!='ADMIN') {
 	 	redirect("../../login/login.php");
 	 }
 }
 
 
 function isValid($conn,$username, $password) {
-		$sql = "SELECT * FROM member where namelogin='$username' and password='$password' ";
+		$sql = "SELECT count(*) FROM `user` where username='$username' and password='$password' and status = '1' ";
 		$restult =  db_query($conn,$sql);
 
 		return mysqli_num_rows($restult);
@@ -49,15 +49,10 @@ function isValid($conn,$username, $password) {
 
 
 function isMember($conn,$username, $password) {
-		$sql = "SELECT * FROM member where namelogin='$username' and password='$password' ";
-
-
-
+		$sql = "SELECT * FROM `user` where username='$username' and password='$password' and status = '1' ";
 		$result=  db_query($conn,$sql);
-
 		$row = mysqli_fetch_assoc($result);
-
-		 return $row;
+		return $row;
 }
 
 
