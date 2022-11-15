@@ -1,30 +1,36 @@
 <?php
-require_once("../lib/db.php");
+require_once("../../lib/db.php");
 
-function getAllMember($conn) {
-	return db_query($conn, "SELECT * FROM bill");
+ 
+function countFolderOrFileByProperty($conn,$name_search, $file_or_folder) {
+    $sql = "select count(*) as total from `store_file_folder` where 1=1 ";
+
+    if(!empty($name_search)) {
+    		$sql .=	 " AND `name` LIKE '%" .  $name_search ."%' " ;      
+    } 
+
+	$sql .=	" AND `type_store` = '$file_or_folder' ";
+
+	return db_query($conn, $sql);
 }
 
-function findPropertyMember($conn,$mapArray,$offset="",$limit="") {
-    $sql = "select * from `user` where 1=1 ";
-    if(count($mapArray)>0){
-    	foreach ($mapArray as $key => $value){
+function findFolderOrFileByProperty($conn, $name_search, $file_or_folder, $offset="", $limit="") {
+    $sql = "select * from `store_file_folder` where 1=1 ";
+	
+	if(!empty($name_search)) {
+		$sql .=	 " AND `name` LIKE '%" .  $name_search ."%' " ;      
+	} 
 
-    		$sql .=	 " AND " . $key  ." LIKE '%" .  $value ."%' " ;
-    	}
-          
-     } 
+    $sql .=	" AND `type_store` = '$file_or_folder' ";
 
-    
  	if($offset!=="" ){
  		$sql .= " limit  " .$offset .",". $limit;
  	}
-
-
-
- 	 
-	return db_query($conn,$sql);
+ 
+	return db_query($conn, $sql);
 }
+
+
 
 
 function createUser($conn, $username, $password,$status,$email,$address ,$phone,$gender, $full_name, $created_date, $role) {

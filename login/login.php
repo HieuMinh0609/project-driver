@@ -5,8 +5,10 @@
     <title>Đăng nhập</title>
 
     <script type="text/javascript" src="../admin/content/jquery-3.4.1.min.js"></script>
-     <link rel="stylesheet"  type="text/css" href="../admin/content/bootstrap-3.1.1-dist/css/bootstrap.min.css">
-     <script type="text/javascript" src="../admin/content/bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
      <link rel="stylesheet" type="text/css" href="template/login.css">
 
 </head>
@@ -44,16 +46,16 @@ if(isset($_POST['register'])){
       
         
         if(!doLogin($conn,$username, $password)) {
-            $resultMess ="Invalid username or password!";
+            $resultMess ="Tài khoản mật khẩu không đúng !";
         }else{
             $isMember = isMember($conn,$username,$password);
-            $result=  $isMember['idrole'];
+            $result=  $isMember['role'];
         }
         if($resultMess==""){
-              if('2'==$result){
+              if('ADMIN'==$result){
             redirect("../admin/viewhome/HomePage.php");
-        }else if('1'==$result) {
-            redirect("../user/layout/layout/layout.php");
+        }else if('USER'==$result) {
+            redirect("../client/layout/index.php");
         }
          
         }
@@ -79,7 +81,7 @@ if(isset($_POST['register'])){
               if('ADMIN'==$result){
             redirect("../admin/viewhome/HomePage.php");
         }else if('USER'==$result) {
-            redirect("../user/layout/index.php");
+            redirect("../client/layout/index.php");
         }
          
         }

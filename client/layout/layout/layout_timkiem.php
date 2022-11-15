@@ -13,6 +13,7 @@
 	
 	<?php include_once('../include/header.php') ?>
 	<?php 
+	
 		include_once ('../../lib/db.php');
 		include_once ('../../lib/controls.php');
 		include_once ('../../lib/auth.php');

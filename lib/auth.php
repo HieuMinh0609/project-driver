@@ -26,9 +26,9 @@ function doLogin($conn,$username, $password){
 
 function checkLoggedInWeb() {
 	startSession();
-	// if(!isset($_SESSION["username"])) {
-	// 	redirect("../../login/login.php");
-	// }
+	if(!isset($_SESSION["username"])) {
+		redirect("../../login/login.php");
+	}
 }
 
 

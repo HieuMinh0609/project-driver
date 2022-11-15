@@ -3,40 +3,44 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Driver</title>
-	<link rel="stylesheet" href="../../bootstrap/css/style.css">
-	<link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../../bootstrap/js/bootstrap.min.js">
-	<script src="../../bootstrap/js/jquery-3.4.1.min.js"></script>
-	 <script src="../../bootstrap/js/bootstrap.min.js"></script>
+ 
+	<script src="../bootstrap/js/jquery-3.4.1.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+   	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+   	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body>
 	
-	<?php include_once('../include/header.php') ?>
+	<?php include_once('./layout/header.php') ?>
 
 	<div class="center">
 		
 		 
 		<?php 
+
 			include_once ('../../lib/db.php');
 			include_once ('../../lib/controls.php');
-			include_once ('../../lib/cart_service.php');
+		 
 			
 			$con =db_connect();
-			if(isset($_POST['submit_timkiem'])){
+			if(isset($_POST['submit_timkiem'])) {
 				$input_timkiem = $_POST['input_timkiem'];
 				$result_tksp = Total_TimkiemSanPham($con, $input_timkiem);
 				$row_tksp = mysqli_fetch_assoc($result_tksp);
 				$total_records_tksp = $row_tksp['total'];
 				echo $total_records_tksp;
-				if($input_timkiem != ''){
+
+				if($input_timkiem != '') {
 					
-					if($total_records_tksp != 0){
+					if($total_records_tksp != 0) {
 						echo "<script>  	
-					 		window.location.href = 'layout_timkiem.php?name=$input_timkiem';
+					 		window.location.href = 'index.php?name=$input_timkiem';
 					 	</script>";
 					 	
 					}
-					else{
+					else {
 						echo "<script>  	
 					 	window.location.href = 'layout.php';
 					 </script>";
@@ -44,8 +48,7 @@
 					}
 
 					
-				}	
-				else{
+				} else {
 					echo "<script>  	
 					 	window.location.href = 'layout.php';
 					 </script>";
@@ -55,9 +58,10 @@
 			}
 		 ?>
 
-		
+		<?php include_once('../layout/storeFileFolder/list.php') ?>
+
 		
 	</div>
-	<?php include_once('../include/footer.php') ?>
+ 
 </body>
 </html>
