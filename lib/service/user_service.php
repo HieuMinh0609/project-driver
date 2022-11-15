@@ -1,11 +1,12 @@
 <?php
-require_once("../lib/db.php");
+ 
 
 function getAllMember($conn) {
 	return db_query($conn, "SELECT * FROM bill");
 }
 
 function findPropertyMember($conn,$mapArray,$offset="",$limit="") {
+
     $sql = "select * from `user` where 1=1 ";
     if(count($mapArray)>0){
     	foreach ($mapArray as $key => $value){
@@ -53,7 +54,7 @@ function db_query_user($conn, $query) {
 
 
 function updateMember($conn,$id, $namelogin, $fullname,$password,$idrole,$sex,$address,$phone) {
-	 db_query_Member($conn, "UPDATE `member` SET `namelogin`='$namelogin',`fullname`='$fullname',`password`='$password',`idrole`='$idrole',`sex`='$sex',`address`='$address',`phone`='$phone'  WHERE idmember = $id");	
+	db_query_user($conn, "UPDATE `member` SET `namelogin`='$namelogin',`fullname`='$fullname',`password`='$password',`idrole`='$idrole',`sex`='$sex',`address`='$address',`phone`='$phone'  WHERE idmember = $id");	
 }
 
 function deleteMember($conn, $id) { 

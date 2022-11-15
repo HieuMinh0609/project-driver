@@ -1,7 +1,7 @@
 <?php 
 require 'conf.php';
 
-function doLogin($conn,$username, $password){
+function doLogin($conn,$username, $password) {
 	if(isValid($conn,$username, $password)==1) {
 		$username_cookie =$username;
 		$password_cookie =$password;
@@ -13,14 +13,17 @@ function doLogin($conn,$username, $password){
 		$_SESSION["username"] = $username;
 
 		startSession();
-		$_SESSION["role"] =$isMember['role'] ;
+		$_SESSION["role"] = $isMember['role'] ;
+		$_SESSION["id"] = $isMember['id'] ;
 
-		 if(!isset($_COOKIE['username']) && !isset($_COOKIE['password'])){
+		if(!isset($_COOKIE['username']) && !isset($_COOKIE['password'])){
 		 	setcookie("username", $username_cookie, time() + (86400 * 30), "/");
 			setcookie("password", $password_cookie, time() + (86400 * 30), "/");
-		 }
+		}
+
 		return true;
 	}	
+	
 	return false;
 }
 

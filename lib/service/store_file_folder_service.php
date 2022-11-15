@@ -1,9 +1,10 @@
 <?php
-require_once("../../lib/db.php");
+ 
 
  
 function countFolderOrFileByProperty($conn,$name_search, $file_or_folder) {
-    $sql = "select count(*) as total from `store_file_folder` where 1=1 ";
+	$user_id = $_SESSION["id"];
+    $sql = "select count(*) as total from `store_file_folder` where  `id_user` = $user_id ";
 
     if(!empty($name_search)) {
     		$sql .=	 " AND `name` LIKE '%" .  $name_search ."%' " ;      
@@ -15,7 +16,10 @@ function countFolderOrFileByProperty($conn,$name_search, $file_or_folder) {
 }
 
 function findFolderOrFileByProperty($conn, $name_search, $file_or_folder, $offset="", $limit="") {
-    $sql = "select * from `store_file_folder` where 1=1 ";
+
+	$user_id = $_SESSION["id"];
+
+    $sql = "select * from `store_file_folder` where `id_user` = $user_id ";
 	
 	if(!empty($name_search)) {
 		$sql .=	 " AND `name` LIKE '%" .  $name_search ."%' " ;      
@@ -30,18 +34,27 @@ function findFolderOrFileByProperty($conn, $name_search, $file_or_folder, $offse
 	return db_query($conn, $sql);
 }
 
-
-
-
-function createUser($conn, $username, $password,$status,$email,$address ,$phone,$gender, $full_name, $created_date, $role) {
-	db_query_user($conn, "INSERT INTO `user`(`username`, `password`,`status`, `email`,`address`, `phone`,`gender`, `full_name`, `created_date`, `role`) 
-	VALUES ('$username', '$password', '$status', '$email', '$address' , '$phone', '$gender', '$full_name', '$created_date', '$role')");
+function deleteById($conn, $id) {
+	$result = mysqli_query($conn, "DELETE FROM `store_file_folder` WHERE id = $id");
+	return $result;
 }
 
+function findById($conn, $id) {
+	return db_single($conn, "SELECT * FROM `store_file_folder` WHERE id = $id");
+}
 
+function update($conn, $parent_id, $id) {
+	if(!empty($parent_id)) {
+		db_query_file_or_folder($conn, "UPDATE `store_file_folder` SET  `parent_id` = $parent_id   WHERE `id` = '$id'");
+	} else {
+		db_query_file_or_folder($conn, "UPDATE `store_file_folder` SET  `parent_id` = null   WHERE `id` = '$id'");
+	}
+}
 
-function db_query_user($conn, $query) {
+function db_query_file_or_folder($conn, $query) {
+
 	$result1 = mysqli_query($conn, $query);
+
 	if(!$result1) {
 		  echo ("<br><div class=\"alert alert-danger alert-dismissible fade in\">
         <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</button>
@@ -57,45 +70,7 @@ function db_query_user($conn, $query) {
 	return $result1;
 }
 
+ 
 
-function updateMember($conn,$id, $namelogin, $fullname,$password,$idrole,$sex,$address,$phone) {
-	 db_query_Member($conn, "UPDATE `member` SET `namelogin`='$namelogin',`fullname`='$fullname',`password`='$password',`idrole`='$idrole',`sex`='$sex',`address`='$address',`phone`='$phone'  WHERE idmember = $id");	
-}
-
-function deleteMember($conn, $id) { 
-	 	$result = mysqli_query($conn, "DELETE FROM member WHERE idmember = $id");
-	 	return $result;
-}
-
-function updatePassword($conn,$password,$phone) {
-	 db_query($conn, "UPDATE `member` SET password='$password'  WHERE phone = '$phone'");
-} 
-
-
-function getSingleMember($conn, $id) {
-	return db_single($conn, "SELECT * FROM `member` WHERE idmember = $id");
-}
-
-
-function getSingleMember_forgotpass($conn, $phone,$namelogin) {
-	$result =  db_query($conn, "SELECT * FROM `member` WHERE phone ='$phone' and namelogin='$namelogin'");
-	return mysqli_num_rows($result);
-}
-
-function newsCountOfMember($conn, $id) {
-	$result = db_query($conn, "SELECT id  FROM `news` WHERE cat_id=$id
-LIMIT 0,1");
-	return mysqli_num_rows($result);
-}
-
-
-function generateRandomString($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-}
- ?>
+?>
+ 

@@ -1,0 +1,19 @@
+.card-header {
+    cursor: pointer;
+}
+
+.item-type-file b {
+    float: right;
+}
+
+.item-menu ul {
+    float: right;
+}
+
+.link-menu:hover {
+    font-weight: bold;
+}
+
+.active {
+    font-weight: bold;
+}
