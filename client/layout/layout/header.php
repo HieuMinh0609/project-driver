@@ -56,6 +56,20 @@
 
 			</div>
 		</nav>
+
+		<div class="container-fluid">
+			 
+			 <!-- Button trigger modal -->
+			 <button type="button" class="btn btn-secondary mt-2" data-toggle="modal" data-target="#uploadFile">
+					 Tải tệp tin lên
+			 </button>
+ 
+			 <!-- Button trigger modal -->
+			 <button type="button" class="btn btn-secondary mt-2" data-toggle="modal" data-target="#createFolder">
+					 Tạo thư mục
+			 </button>
+ 
+		</div>
 </div>
  
 

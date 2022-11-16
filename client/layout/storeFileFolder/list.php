@@ -70,7 +70,7 @@
 			?>	
 					
 				
-				 	<div class="col-md-2">
+				 	<div class="col-lg-2 col-md-4">
 						<div class="card">
 							<div class="card-header" title="<?php echo $item['name'] ?>">
 
@@ -88,9 +88,9 @@
 										 
 										</i>
 										<div class="dropdown-menu">
-											 <a class=" dropdown-item " href="#">Try cập</a>
-											 <a class=" dropdown-item " href="#">Xóa</a>
-											 <a class=" dropdown-item " href="#">Sửa</a>
+										<a class=" dropdown-item " href="#">Try cập</a>
+											 <a class=" dropdown-item " onclick="return confirm('Bạn có chắc chắn muốn xóa ?')" href="./storeFileFolder/delete.php?id=<?php echo $item["id"] ?>"  id-item="<?php echo  $item["id"] ?>" href="#">Xóa</a>
+											 <a class=" dropdown-item "  href="./storeFileFolder/edit.php?id=<?php echo $item["id"] ?>"  href="#">Sửa</a>
 											 <a class=" dropdown-item " href="#">Chia sẻ</a>
 										</div>
 								 
@@ -107,14 +107,14 @@
 			<div class="col-md-12 mb-2"><b>Danh sách tài liệu</b></div>
 			<?php while ($item = mysqli_fetch_array($listFile)) {
 				?>	
-				 	<div class="col-md-2">
+				 	<div class="col-lg-2 col-md-4">
 						<div class="card">
 							<div class="card-header" title="<?php echo $item['name'] ?>">
 								
 								
 								<div class="row">
 									
-									<div class="col-md-8">
+									<div class="col-md-8 ">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-ruled-fill" viewBox="0 0 16 16">
 											<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1H6v2h7v1H6v2H5v-2H3v-1h2v-2H3V9z"/>
 										</svg>

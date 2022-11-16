@@ -19,7 +19,7 @@ function findFolderOrFileByProperty($conn, $name_search, $file_or_folder, $offse
 
 	$user_id = $_SESSION["id"];
 
-    $sql = "select * from `store_file_folder` where `id_user` = $user_id ";
+    $sql = "select * from `store_file_folder` where `id_user` = $user_id AND parent_id is null ";
 	
 	if(!empty($name_search)) {
 		$sql .=	 " AND `name` LIKE '%" .  $name_search ."%' " ;      
@@ -49,6 +49,28 @@ function update($conn, $parent_id, $id) {
 	} else {
 		db_query_file_or_folder($conn, "UPDATE `store_file_folder` SET  `parent_id` = null   WHERE `id` = '$id'");
 	}
+}
+
+function save($conn, $parent_id, $name, $type_file, $user_id, $url) {
+	if(!empty($parent_id)) {
+		db_query_file_or_folder($conn, "INSERT INTO `store_file_folder` (`name`, `id_user`, `parent_id`, `url`, `type_store`) 
+		VALUES ('$name', '$user_id',  $parent_id , '$url', '$type_file' )");
+	} else {
+		db_query_file_or_folder($conn, "INSERT INTO `store_file_folder` (`name`, `id_user`, `url`, `type_store`) 
+		VALUES ('$name', '$user_id', '$url', '$type_file' )");
+	}
+	
+}
+
+function saveFolder($conn, $parent_id, $name, $type_file, $user_id) {
+	if(!empty($parent_id)) {
+		db_query_file_or_folder($conn, "INSERT INTO `store_file_folder` (`name`, `id_user`, `parent_id`, `type_store`) 
+		VALUES ('$name', '$user_id',  $parent_id, '$type_file' )");
+	} else {
+		db_query_file_or_folder($conn, "INSERT INTO `store_file_folder` (`name`, `id_user`, `type_store`) 
+		VALUES ('$name', '$user_id', '$type_file' )");
+	}
+	
 }
 
 function db_query_file_or_folder($conn, $query) {
