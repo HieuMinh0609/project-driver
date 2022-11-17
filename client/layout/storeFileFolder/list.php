@@ -20,39 +20,39 @@
 		$name_search = $_GET['name'] ?? null;
 
 		$con = db_connect();
+	 
+			$countFolder = countFolderOrFileByProperty($con, $name_search, 'FOLDER');
 
-		$countFolder = countFolderOrFileByProperty($con, $name_search, 'FOLDER');
+			$rowFolder = mysqli_fetch_assoc($countFolder);
+			$total_record_folder = $rowFolder['total'];
 
-		$rowFolder = mysqli_fetch_assoc($countFolder);
-		$total_record_folder = $rowFolder['total'];
+			$current_page_folder = isset($_GET['page']) ? $_GET['page'] : 1;
+			$total_page_folder = ceil($current_page_folder / $limit);
 
-		$current_page_folder = isset($_GET['page']) ? $_GET['page'] : 1;
-		$total_page_folder = ceil($current_page_folder / $limit);
+			if ($current_page_folder > $total_page_folder) $current_page_folder = $total_page_folder;
+			else if ($current_page_folder < 1)  $current_page_folder = 1;
+			
 
-		if ($current_page_folder > $total_page_folder) $current_page_folder = $total_page_folder;
-		else if ($current_page_folder < 1)  $current_page_folder = 1;
-		
+			$startPageFolder = ($current_page_folder - 1) * $limit;
 
-		$startPageFolder = ($current_page_folder - 1) * $limit;
+			$listFolder = findFolderOrFileByProperty($con,$name_search, 'FOLDER',$startPageFolder, $limit);
 
-		$listFolder = findFolderOrFileByProperty($con,$name_search, 'FOLDER',$startPageFolder, $limit);
+	
+			$countFile = countFolderOrFileByProperty($con, $name_search, 'FILE');
 
- 
-		$countFile = countFolderOrFileByProperty($con, $name_search, 'FILE');
+			$rowFile = mysqli_fetch_assoc($countFile);
+			$total_record_file = $rowFile['total'];
 
-		$rowFile = mysqli_fetch_assoc($countFile);
-		$total_record_file = $rowFile['total'];
+			$current_page_file = isset($_GET['page']) ? $_GET['page'] : 1;
+			$total_page_file = ceil($current_page_file / $limit);
 
-		$current_page_file = isset($_GET['page']) ? $_GET['page'] : 1;
-		$total_page_file = ceil($current_page_file / $limit);
+			if ($current_page_file > $total_page_file) $current_page_file = $total_page_file;
+			else if ($current_page_file < 1)  $current_page_file = 1;
+			
 
-		if ($current_page_file > $total_page_file) $current_page_file = $total_page_file;
-		else if ($current_page_file < 1)  $current_page_file = 1;
-		
+			$startPageFile = ($current_page_file - 1) * $limit;
 
-		$startPageFile = ($current_page_file - 1) * $limit;
-
-		$listFile= findFolderOrFileByProperty($con,$name_search, 'FILE',$startPageFile, $limit);
+			$listFile= findFolderOrFileByProperty($con,$name_search, 'FILE',$startPageFile, $limit);
 
 		db_close($con);
  
@@ -140,7 +140,7 @@
 											 <a class=" dropdown-item " href="#">Try cập</a>
 											 <a class=" dropdown-item " onclick="return confirm('Bạn có chắc chắn muốn xóa ?')" href="./storeFileFolder/delete.php?id=<?php echo $item["id"] ?>"  id-item="<?php echo  $item["id"] ?>" href="#">Xóa</a>
 											 <a class=" dropdown-item "  href="./storeFileFolder/edit.php?id=<?php echo $item["id"] ?>"  href="#">Sửa</a>
-											 <a class=" dropdown-item " href="#">Chia sẻ</a>
+											 <a class=" dropdown-item " href="./storeFileFolder/shareFileFolder.php?id=<?php echo $item["id"] ?>">Chia sẻ</a>
 										</div>
 								 
 									</div>

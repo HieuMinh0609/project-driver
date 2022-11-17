@@ -67,8 +67,18 @@ function updatePassword($conn,$password,$phone) {
 } 
 
 
-function getSingleMember($conn, $id) {
-	return db_single($conn, "SELECT * FROM `member` WHERE idmember = $id");
+function isExist($conn,$username) {
+	$sql = "SELECT count(*) FROM `user` where `username`= '$username' and status = '1' ";
+	$restult =  db_query($conn,$sql);
+	return mysqli_num_rows($restult);
+}
+
+function getSingleUser($conn, $id) {
+	return db_single($conn, "SELECT * FROM `user` WHERE id = $id");
+}
+
+function getSingleUserByUser($conn, $username) {
+	return db_single($conn, "SELECT * FROM `user` WHERE `username` = '$username' ");
 }
 
 

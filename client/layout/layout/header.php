@@ -26,10 +26,10 @@
 				<div class="col-md-4">
 					<ul class="navbar-nav mr-auto item-menu"  >
 						<li class="nav-item ">
-							<a class="nav-link link-menu" href="#">Driver chia sẻ với tôi<span class="sr-only">(current)</span></a>
+							<a class="nav-link link-menu" href="shareWithMe.php">Driver chia sẻ với tôi<span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link link-menu" href="#">Driver của tôi <span class="sr-only">(current)</span></a>
+							<a class="nav-link link-menu" href="index.php">Driver của tôi <span class="sr-only">(current)</span></a>
 						</li>
 					</ul>
 				</div>
