@@ -47,6 +47,12 @@ function findShareById($conn, $id) {
 	 return $data;
 }
 
+function deleteByIdFile($conn, $id) {
+	$data = db_query($conn, "DELETE FROM `share` WHERE id_store_file_folder = $id");
+
+	return $data;
+}
+
 function findShareByUrlShare($conn, $url) {
 	
 	$sql = "SELECT * FROM `share` WHERE `url_share` = '$url'";

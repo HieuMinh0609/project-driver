@@ -44,11 +44,14 @@ function checkLoggedInAdmin() {
 
 
 function isValid($conn,$username, $password) {
-		$sql = "SELECT count(*) FROM `user` where username='$username' and password='$password' and status = '1' ";
-		$restult =  db_query($conn,$sql);
+		 $sql = "SELECT count(id) as id FROM `user` where username='$username' and password='$password' and status = '1' ";
+	 
+		$result = mysqli_query($conn, $sql);
+		$count = mysqli_fetch_assoc($result)['id'];
 
-		return mysqli_num_rows($restult);
-}
+		if ($count == 0) return false;
+		else return true;
+	}
 
 
 function isMember($conn,$username, $password) {

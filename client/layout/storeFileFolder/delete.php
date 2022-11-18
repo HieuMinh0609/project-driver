@@ -32,15 +32,18 @@
                    require('../../../lib/db.php');
                    require ('../../../lib/controls.php');
                    require ('../../../lib/service/store_file_folder_service.php');
+                   require ('../../../lib/service/share_service.php');
                 ?>
 
                 
                 <?php 
                     
                     $conn = db_connect();
-
+                  
                     $id = escapeGetParam($conn, "id");
-                    
+
+                    deleteByIdFile($conn, $id);
+                    deletebyId($conn, $id);
 
                     if(deletebyId($conn, $id)) {
                         echo("<br><br><div class=\"container\">

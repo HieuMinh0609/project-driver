@@ -34,7 +34,7 @@ if(isset($_POST['register'])){
             escapePostParam($conn,"gender"), 
             escapePostParam($conn,"full_name"),
             $timenow, 'USER');    
-
+    $resultMess ="Đăng ký thành công !";
     db_close($conn);
 }
 
@@ -70,7 +70,7 @@ if(isset($_POST['register'])){
         $password =  escapePostParam($conn, "password");
       
         $user = md5($password);
-        echo $user;
+    
         if(!doLogin($conn,$username, md5($password))) {
             $resultMess ="Tài khoản hoặc mật khẩu không đúng !";
         } else {
