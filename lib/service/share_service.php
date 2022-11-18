@@ -13,28 +13,50 @@ function db_query_share_return($conn, $query) {
 }
 
 
-function findShareByProperty($conn, $name_search, $user_id, $offset="", $limit="") {
+function findShareByProperty($conn, $name_search, $user_id, $parent_id, $offset="", $limit="") {
  
+	if(empty($parent_id)) {
 
-    $sql = "SELECT sf.id, sf.name, sf.url FROM `share` s 
-    inner join `share_permission` sp on s.id = sp.share_id 
-    inner join `store_file_folder` sf   on sf.id = s.id_store_file_folder
-    where sp.user_id = '$user_id' ";
-  
+		$sql = "SELECT sf.id, sf.name, sf.url, sf.type_store FROM `share` s 
+		inner join `share_permission` sp on s.id = sp.share_id 
+		inner join `store_file_folder` sf   on sf.id = s.id_store_file_folder
+		where sp.user_id = '$user_id' ";
+   
+	} else {
+		$sql = "SELECT sf.id, sf.name, sf.url, sf.type_store FROM `store_file_folder` sf  
+		where  sf.parent_id = '$parent_id' ";
+	}
 	
 	if(!empty($name_search)) {
 		$sql .=	 " AND `name` LIKE '%" .  $name_search ."%' " ;      
 	} 
 
-    $sql .=' group by sf.id, sf.name, sf.url ';
-    
+    $sql .=' group by sf.id, sf.name, sf.url , sf.type_store';
+	
  	if($offset!=="" ) {
  		$sql .= " limit  " .$offset .",". $limit;
  	} 
-
  
-
 	return db_query($conn, $sql);
+}
+
+
+function findShareById($conn, $id) {
+	 $data = db_single($conn, "SELECT * FROM `share` WHERE id_store_file_folder = $id");
+ 
+	 return $data;
+}
+
+function findShareByUrlShare($conn, $url) {
+	
+	$sql = "SELECT * FROM `share` WHERE `url_share` = '$url'";
+	echo $sql ;
+	return db_single($conn, $sql);
+}
+
+
+function isCorrectPasswordShare($conn, $id, $password) {
+	return db_single($conn, "SELECT * FROM `share` WHERE id_store_file_folder = $id AND `password` = '$password' ");
 }
 
 function db_query_share($conn, $query) {

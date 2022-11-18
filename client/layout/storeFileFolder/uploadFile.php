@@ -22,10 +22,9 @@
             $parent_id = $_GET['parent_id'];
         }
 
-    return json_encode(uploadFiles($_FILES['files'], $parent_id, $user_id));
- }
-
-
+        return json_encode(uploadFiles($_FILES['files'], $parent_id, $user_id));
+     }
+ 
 ?>
 
 <!DOCTYPE html>

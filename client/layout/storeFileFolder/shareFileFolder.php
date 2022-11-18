@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="mt-2">
-                    <input id="" name="url_share" readonly class="form-control" type="text" value=" <?php echo $url_share ?>"> 
+                    <input id="" name="url_share" readonly class="form-control" type="text" value="<?php echo $url_share ?>"> 
                 </div>
 
                 <button type="submit" name="CREATES" class="btn btn-secondary mt-4">Lưu</button>

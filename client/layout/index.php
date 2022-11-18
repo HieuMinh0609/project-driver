@@ -26,7 +26,7 @@
 			include_once ('../../lib/db.php');
 			include_once ('../../lib/controls.php');
 		 
-		 ?>
+		?>
 
 		<?php include_once('../layout/storeFileFolder/list.php') ?>
 		<?php include_once('../layout/storeFileFolder/uploadFile.php') ?>

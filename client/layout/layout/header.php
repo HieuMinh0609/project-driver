@@ -7,6 +7,9 @@
 	if (isset($_GET['logout']))   {
         doLogout();
 	}
+
+	$name_search = $_GET['parent_id'] ?? null;
+
 	
  ?>
 <div>
@@ -18,17 +21,18 @@
 
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<div class="col-md-6">
-					<form class="form-inline my-2 my-lg-0">
-						<input class="form-control mr-sm-2" type="search" style="with:100%" placeholder="Tìm kiếm" aria-label="Search">
+					<form class="form-inline my-2 my-lg-0" method = "GET">
+						<input type="hidden" name="parent_id" value="<?php echo $name_search ?>">
+						<input class="form-control mr-sm-2 input_timkiem" name="name" type="search" style="with:100%" placeholder="Tìm kiếm" aria-label="Search">
 						<button class="btn btn-secondary  my-2 my-sm-0" type="submit">Tìm kiếm</button>
 					</form>
 				</div>
 				<div class="col-md-4">
 					<ul class="navbar-nav mr-auto item-menu"  >
-						<li class="nav-item ">
-							<a class="nav-link link-menu" href="shareWithMe.php">Driver chia sẻ với tôi<span class="sr-only">(current)</span></a>
+						<li class="nav-item shareWithMe">
+							<a class="nav-link link-menu shareWithMeItem" href="shareWithMe.php">Driver chia sẻ với tôi<span class="sr-only">(current)</span></a>
 						</li>
-						<li class="nav-item active">
+						<li class="nav-item active driverMe">
 							<a class="nav-link link-menu" href="index.php">Driver của tôi <span class="sr-only">(current)</span></a>
 						</li>
 					</ul>

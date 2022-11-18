@@ -27,11 +27,36 @@
 <?php 
     require('../../../lib/db.php');
     require ('../../../lib/controls.php');
+    require ('../../../lib/service/share_service.php');
+    require ('../../../lib/service/share_permission_service.php');
     require ('../../../lib/service/store_file_folder_service.php');
+  
 ?>
 
 <?php 
+    
+    $url_share = $_GET['url_share'] ?? null;
  
+    startSession();
+    if (!empty($url_share)) {
+        $conn = db_connect();   
+            $item = findShareByUrlShare($conn, "http://localhost/project-driver/client/layout/storeFileFolder/fileSearchArea.php?url_share=".$url_share);
+            echo $item;
+            if (!empty($item)) {
+
+                $user_id = $_SESSION["id"];
+                createSharePermission($conn, $item['id'], $user_id );
+                $file_or_folder = findById($conn, $item['id_store_file_folder']);
+                echo $file_or_folder;
+                if ($file_or_folder['type_store'] == 'FOLDER') {
+                    redirect("./shareWithMe.php?parent_id=".$file_or_folder['id']);
+                } else {
+                    redirect("./showFile.php?id=".$file_or_folder['id']);
+                }
+            }
+        db_close($conn);
+    }
+
     if(isset($_POST["UPDATES"])){
 
           $conn = db_connect();
@@ -47,68 +72,3 @@
     }
   
 ?>
-    <div class="pt-5">
-        <div class="container" >
-            <div class="center">
-
-              
-
-                
-                <?php 
-                    
-                    $conn = db_connect();
-
-                        $id = escapeGetParam($conn, "id");
-
-                        $item = findById($conn, $id);
-                        $listFolder = findFolderOrFileByProperty($conn, '', 'FOLDER', 0, 9999999);
-
-                    db_close($conn);
-                
-                ?>
-
-                <form action="" method="POST">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1"><b>Tên</b> </label>
-                            <input type="text" require class="form-control" readonly name="name" value=" <?php echo $item["name"] ?>" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        </div>
-                        <input type="hidden" require class="form-control" name="id"  value=" <?php echo $item["id"] ?>" aria-describedby="emailHelp">
-                        
-                        <div>
-                            <label for="exampleInputEmail1"><b>Thư mục cha</b> </label>
-                            <select class="form-control " name="parent_id">
-                                <option  value="">-Thư mục cha-</option> 
-                                <?php while ($item = mysqli_fetch_array($listFolder)) {
-                                ?>	
-                                  
-                                    <?php 
-                                        if ($item["id"] == $id) {
-                
-                                            echo("<option selected value=".$item["id"].">".$item["name"]."</option>");
-                                        }
-                                    ?>
-                                    <?php 
-                                        if ($item["id"] != $id) {
-                                            echo("<option  value=".$item["id"].">".$item["name"]."</option>");
-                                        }
-                                    ?>
-                                 
-                                <?php } ?>	  
-                            </select>
-                         </div>
-                        <button type="submit" name="UPDATES" class="btn btn-primary mt-5" onclick="return confirm('Bạn có chắc chắn muốn cập nhật ?')" h>Cập nhật </button>
-                        
-                </form>
-                
-            </div>
-           
-            
-          
-        </div>
-        <button class="btn btn-secondary ">
-            <a style="color: white" href="/project-driver/client/layout/index.php"> << Quay lại</a>
-        </button>
-    </div>
- 
-</body>
-</html>

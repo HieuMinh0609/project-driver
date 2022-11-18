@@ -44,18 +44,19 @@ function uploadFiles($files, $parent_id, $user_id) {
             // if everything is ok, try to upload file
         } else {
 
-          
+            
+            $uuid = generateRandomString(10);
 
             if (file_exists($target_file)) {
                 $conn =db_connect();
-                    save($conn, $parent_id, $files["name"][$count], "FILE", $user_id, $target_file);
+                    save($conn, $parent_id, $files["name"][$count], "FILE", $user_id, $uuid.$files["name"][$count]);
                 db_close($conn);
                 echo "File ". htmlspecialchars( basename( $files["name"][$count])). " đã được upload. <br>";
 
             } else if (move_uploaded_file($files["tmp_name"][$count], $target_file)) {
 
                 $conn =db_connect();
-                    save($conn, $parent_id, $files["name"][$count], "FILE", $user_id, $target_file);
+                    save($conn, $parent_id, $files["name"][$count], "FILE", $user_id, $uuid.$files["name"][$count]);
                 db_close($conn);
                 echo "File ". htmlspecialchars( basename( $files["name"][$count])). " đã được upload. <br>";
 

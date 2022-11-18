@@ -37,7 +37,7 @@
           $conn = db_connect();
             update($conn,$idmember, 
                 escapePostParam($conn, "parent_id"), 
-                escapePostParam($conn,"id"));     
+                escapePostParam($conn,"id"),  escapePostParam($conn,"name"));     
             db_close($conn);
         echo("<br><br><div class=\"container\">
             <div class=\"alert alert-success\">
@@ -70,7 +70,14 @@
                 <form action="" method="POST">
                         <div class="form-group">
                             <label for="exampleInputEmail1"><b>Tên</b> </label>
-                            <input type="text" require class="form-control" readonly name="name" value=" <?php echo $item["name"] ?>" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <?php 
+                                        if ($item["type_store"] == 'FOLDER') {
+                                            echo '<input type="text" require class="form-control"   name="name" value="'.$item["name"].'" id="exampleInputEmail1" aria-describedby="emailHelp">';
+                                        } else {
+											echo '<input type="text" require class="form-control" readonly name="name" value="'.$item["name"].'" id="exampleInputEmail1" aria-describedby="emailHelp">';
+										}
+                                    ?>
+
                         </div>
                         <input type="hidden" require class="form-control" name="id"  value=" <?php echo $item["id"] ?>" aria-describedby="emailHelp">
                         

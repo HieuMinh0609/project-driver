@@ -18,8 +18,15 @@
 
 		$limit = 999999;
 		$name_search = $_GET['name'] ?? null;
+		$parent_id = $_GET['parent_id'] ?? null;
 
 		$con = db_connect();
+
+
+			if (!empty($parent_id)) {
+				$file_folder = findById($con, $parent_id);
+ 
+			}
 	 
 			$countFolder = countFolderOrFileByProperty($con, $name_search, 'FOLDER');
 
@@ -35,7 +42,7 @@
 
 			$startPageFolder = ($current_page_folder - 1) * $limit;
 
-			$listFolder = findFolderOrFileByProperty($con,$name_search, 'FOLDER',$startPageFolder, $limit);
+			$listFolder = findFolderOrFileByProperty($con,$name_search, $parent_id, 'FOLDER',$startPageFolder, $limit);
 
 	
 			$countFile = countFolderOrFileByProperty($con, $name_search, 'FILE');
@@ -52,7 +59,7 @@
 
 			$startPageFile = ($current_page_file - 1) * $limit;
 
-			$listFile= findFolderOrFileByProperty($con,$name_search, 'FILE',$startPageFile, $limit);
+			$listFile= findFolderOrFileByProperty($con,$name_search, $parent_id, 'FILE',$startPageFile, $limit);
 
 		db_close($con);
  
@@ -65,6 +72,15 @@
 <div class="pt-5">
     <div class="container-fluid" >
 		<div class="row">
+
+			<div class="col-md-12 mb-2"><b><?php 
+					
+					if (!empty($file_folder)) {
+						echo '<a href="index.php?parent_id='.$file_folder['parent_id'].'"><h3>Thư mục cha : ' .$file_folder['name'].'</a></h3>';
+					}
+
+			?></b></div>
+
 			<div class="col-md-12 mb-2"><b>Danh sách tệp tin</b></div>
 			<?php while ($item = mysqli_fetch_array($listFolder)) {
 			?>	
@@ -88,10 +104,17 @@
 										 
 										</i>
 										<div class="dropdown-menu">
-										<a class=" dropdown-item " href="#">Try cập</a>
+											<?php 
+													if ($item["type_store"] == 'FILE') {
+														echo '<a class=" dropdown-item " href="./storeFileFolder/showFile.php?id='.$item["id"].' ">Try cập</a>';
+													} else {
+														echo '<a class=" dropdown-item " href="./index.php?parent_id='.$item["id"].' ">Try cập</a>';
+													}
+													
+											?>
 											 <a class=" dropdown-item " onclick="return confirm('Bạn có chắc chắn muốn xóa ?')" href="./storeFileFolder/delete.php?id=<?php echo $item["id"] ?>"  id-item="<?php echo  $item["id"] ?>" href="#">Xóa</a>
 											 <a class=" dropdown-item "  href="./storeFileFolder/edit.php?id=<?php echo $item["id"] ?>"  href="#">Sửa</a>
-											 <a class=" dropdown-item " href="#">Chia sẻ</a>
+											 <a class=" dropdown-item " href="./storeFileFolder/shareFileFolder.php?id=<?php echo $item["id"] ?>">Chia sẻ</a>
 										</div>
 								 
 								</div>
@@ -104,6 +127,7 @@
 		</div>
 
 		<div class="row mt-5">
+		
 			<div class="col-md-12 mb-2"><b>Danh sách tài liệu</b></div>
 			<?php while ($item = mysqli_fetch_array($listFile)) {
 				?>	
@@ -123,7 +147,7 @@
 									
 									<div  class="col-md-2 item-type-file">
 										<b><?php 
-											$name_file = $item['name'];
+											$name_file = $item['url'];
 											$arry = (explode(".",$name_file));
 											$type_file = "";
 									
@@ -137,10 +161,16 @@
 										 
 										</i>
 										<div class="dropdown-menu">
-											 <a class=" dropdown-item " href="#">Try cập</a>
-											 <a class=" dropdown-item " onclick="return confirm('Bạn có chắc chắn muốn xóa ?')" href="./storeFileFolder/delete.php?id=<?php echo $item["id"] ?>"  id-item="<?php echo  $item["id"] ?>" href="#">Xóa</a>
-											 <a class=" dropdown-item "  href="./storeFileFolder/edit.php?id=<?php echo $item["id"] ?>"  href="#">Sửa</a>
-											 <a class=" dropdown-item " href="./storeFileFolder/shareFileFolder.php?id=<?php echo $item["id"] ?>">Chia sẻ</a>
+											<?php if ($item["type_store"] == 'FILE') {?>
+														<a class=" dropdown-item " href="./storeFileFolder/showFile.php?id=<?php echo $item["id"]; ?>">Try cập</a>
+											<?php		} else { ?>
+														<a class=" dropdown-item " href="./index.php?id=<?php echo $item["id"]; ?>">Try cập</a>
+											<?php	} ?>
+													
+											
+											<a class=" dropdown-item " onclick="return confirm('Bạn có chắc chắn muốn xóa ?')" href="./storeFileFolder/delete.php?id=<?php echo $item["id"] ?>"  id-item="<?php echo  $item["id"] ?>" href="#">Xóa</a>
+											<a class=" dropdown-item "  href="./storeFileFolder/edit.php?id=<?php echo $item["id"] ?>"  href="#">Sửa</a>
+											<a class=" dropdown-item " href="./storeFileFolder/shareFileFolder.php?id=<?php echo $item["id"] ?>">Chia sẻ</a>
 										</div>
 								 
 									</div>

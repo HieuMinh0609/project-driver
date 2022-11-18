@@ -32,7 +32,6 @@
 		<?php include_once('../layout/storeFileFolder/uploadFile.php') ?>
 		<?php include_once('../layout/storeFileFolder/createFolder.php') ?>
  
-		
 	</div>
  
 </body>

@@ -15,12 +15,18 @@ function countFolderOrFileByProperty($conn,$name_search, $file_or_folder) {
 	return db_query($conn, $sql);
 }
 
-function findFolderOrFileByProperty($conn, $name_search, $file_or_folder, $offset="", $limit="") {
+function findFolderOrFileByProperty($conn, $name_search, $parent_id, $file_or_folder, $offset="", $limit="") {
 
 	$user_id = $_SESSION["id"];
 
-    $sql = "select * from `store_file_folder` where `id_user` = $user_id AND parent_id is null ";
+    $sql = "select * from `store_file_folder` where `id_user` = $user_id ";
 	
+	if(!empty($parent_id) ) {
+		$sql .=	 " AND parent_id = '$parent_id' " ;    
+	} else {
+		$sql .=	 " AND parent_id is null  " ;   
+	}
+
 	if(!empty($name_search)) {
 		$sql .=	 " AND `name` LIKE '%" .  $name_search ."%' " ;      
 	} 
@@ -31,6 +37,7 @@ function findFolderOrFileByProperty($conn, $name_search, $file_or_folder, $offse
  		$sql .= " limit  " .$offset .",". $limit;
  	}
  
+
 	return db_query($conn, $sql);
 }
 
@@ -43,11 +50,11 @@ function findById($conn, $id) {
 	return db_single($conn, "SELECT * FROM `store_file_folder` WHERE id = $id");
 }
 
-function update($conn, $parent_id, $id) {
+function update($conn, $parent_id, $id, $name) {
 	if(!empty($parent_id)) {
-		db_query_file_or_folder($conn, "UPDATE `store_file_folder` SET  `parent_id` = $parent_id   WHERE `id` = '$id'");
+		db_query_file_or_folder($conn, "UPDATE `store_file_folder` SET  `parent_id` = $parent_id , `name` = $name  WHERE `id` = '$id'");
 	} else {
-		db_query_file_or_folder($conn, "UPDATE `store_file_folder` SET  `parent_id` = null   WHERE `id` = '$id'");
+		db_query_file_or_folder($conn, "UPDATE `store_file_folder` SET  `parent_id` = null , `name` = $name  WHERE `id` = '$id'");
 	}
 }
 
@@ -92,7 +99,15 @@ function db_query_file_or_folder($conn, $query) {
 	return $result1;
 }
 
+function generateRandomString($length) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+ ?>
  
-
-?>
  
