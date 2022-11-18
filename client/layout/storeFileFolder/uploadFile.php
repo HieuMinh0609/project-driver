@@ -151,7 +151,7 @@ _('drag_drop').ondrop = function(event) {
 
         let id = getUrlParameter("id");
 
-        ajax_request.open("post", "storeFileFolder/upload_file.php?parent_id="+id);
+        ajax_request.open("post", "storeFileFolder/uploadFile.php?parent_id="+id);
 
         ajax_request.upload.addEventListener('progress', function(event){
 
