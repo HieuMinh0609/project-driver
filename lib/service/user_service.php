@@ -38,13 +38,13 @@ function createUser($conn, $username, $password,$status,$email,$address ,$phone,
 function db_query_user($conn, $query) {
 	$result1 = mysqli_query($conn, $query);
 	if(!$result1) {
-		  echo ("<br><div class=\"alert alert-danger alert-dismissible fade in\">
+		  echo ("<br><div class=\"alert alert-danger alert-dismissible \">
         <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</button>
         <strong>Lỗi!</strong> Có lỗi sảy ra
         </div>");
         
 	} else {
-		 echo ("<br><div class=\"alert alert-success alert-dismissible fade in\">
+		 echo ("<br><div class=\"alert alert-success alert-dismissible \">
         <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</button>
         <strong>Thành công!</strong>  Bạn đã thực hiện thành công !
         </div>");
@@ -53,12 +53,14 @@ function db_query_user($conn, $query) {
 }
 
 
-function updateMember($conn,$id, $namelogin, $fullname,$password,$idrole,$sex,$address,$phone) {
-	db_query_user($conn, "UPDATE `member` SET `namelogin`='$namelogin',`fullname`='$fullname',`password`='$password',`idrole`='$idrole',`sex`='$sex',`address`='$address',`phone`='$phone'  WHERE idmember = $id");	
+function updateMember($conn,$id, $namelogin, $fullname,$password,$idrole,$sex,$address,$phone,$status) {
+	$sql =  "UPDATE `user` SET `username`='$namelogin',`full_name`='$fullname',`password`='$password',`role`='$idrole', `gender`='$sex',`address`='$address',`phone`='$phone', `status` = '$status'  WHERE id = $id";
+ 
+	db_query_user($conn,$sql);	
 }
 
 function deleteMember($conn, $id) { 
-	 	$result = mysqli_query($conn, "DELETE FROM member WHERE idmember = $id");
+	 	$result = mysqli_query($conn, "DELETE FROM `user` WHERE id = $id");
 	 	return $result;
 }
 

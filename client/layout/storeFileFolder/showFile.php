@@ -116,7 +116,7 @@
 
         db_close($conn);
  
-        $fileLocation =  "http://localhost/project-driver/lib/upload/" . $item['name'];
+        $fileLocation =  "http://localhost/project-driver/lib/upload/" . $item['url'];
         
     ?>
 

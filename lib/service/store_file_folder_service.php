@@ -15,6 +15,22 @@ function countFolderOrFileByProperty($conn,$name_search, $file_or_folder) {
 	return db_query($conn, $sql);
 }
 
+function findFolderOrFileByPropertyForAdmin($conn, $name_search, $offset="", $limit="") {
+
+    $sql = "select sf.*, u.username from `store_file_folder` sf inner join `user` u on sf.id_user = u.id where 1=1 ";
+	
+	if(!empty($name_search)) {
+		$sql .=	 " AND sf.`name` LIKE '%" .  $name_search ."%' " ;      
+	} 
+
+ 	if($offset!=="" ){
+ 		$sql .= " limit  " .$offset .",". $limit;
+ 	}
+ 
+	return db_query($conn, $sql);
+}
+
+
 function findFolderOrFileByProperty($conn, $name_search, $parent_id, $file_or_folder, $offset="", $limit="") {
 
 	$user_id = $_SESSION["id"];

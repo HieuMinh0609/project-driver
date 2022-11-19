@@ -2,7 +2,7 @@
 function printTable($data, $columns, $editLink = "",$id="", $deleteLink = "",$editdetailLink = "", $deleteCondition = null, $btn = "",$addLink="")
 {
 	
-	echo("<div class=\"container\">");
+	echo("<div class=\"container mt-5 \">");
 	echo("<div class=\"row\">");
 	echo("<table id=\"tableID\" class=\"table table_backcolor table-bordered\">");
 	echo("<thead>");
@@ -51,10 +51,15 @@ function printTable($data, $columns, $editLink = "",$id="", $deleteLink = "",$ed
 				echo("<td style=\" width: 30px;\" ><a  class=\"btn btn-primary\" href=\"$addLink?id={$row["$id"]}\">Add</a></td>");	
 		}
 		if($editdetailLink != "") {
-				echo("<td style=\" width: 30px;\" ><a  class=\"btn btn-primary\" href=\"$editdetailLink?id={$row["$id"]}\">Detail</a></td>");	
+				if ($row['type_store'] == 'FILE') {
+					echo("<td style=\" width: 40px;\" ><a style=\" width: max-content; \" class=\"btn btn-primary\" href=\"$editdetailLink?id={$row["$id"]}\">Chi tiết</a></td>");	
+				} else {
+					echo("<td style=\" width: 40px;\" ></td>");	
+				}
+ 
 		}
 		if($editLink != "") {
-				echo("<td style=\" width: 30px;\" ><a  class=\"btn btn-warning\" href=\"$editLink?id={$row["$id"]}\">Edit</a></td>");	
+				echo("<td style=\" width: 30px;\" ><a  class=\"btn btn-warning\" href=\"$editLink?id={$row["$id"]}\">Sửa</a></td>");	
 		}
 		if($deleteLink != "") {
 				$result = 0;
@@ -63,14 +68,14 @@ function printTable($data, $columns, $editLink = "",$id="", $deleteLink = "",$ed
 				}
 
 				if($result == 0) {
-					echo("<td style=\" width: 30px;\"><a class=\"btn btn-danger\" href=\"$deleteLink?id={$row["$id"]}\" onclick=\"return confirm('Are you sure?')\">Delete</a></td>");	
+					echo("<td style=\" width: 30px;\"><a class=\"btn btn-danger\" href=\"$deleteLink?id={$row["$id"]}\" onclick=\"return confirm('Bạn có chắc chắn?')\">Xóa</a></td>");	
 				}
 				else {
 					echo("<td>Cannot delete category contains news</td>");
 				}
 		}
 		if($btn != "") {
-				echo("<td style=\" width: 30px;\" ><button    id_urc=\"{$row["$id"]}\" class=\"btn btn-primary table_show\">Show</button></td>");	
+				echo("<td style=\" width: 30px;\" ><button    id_urc=\"{$row["$id"]}\" class=\"btn btn-primary table_show\">Hiển thị</button></td>");	
 		}
 		echo ("</tr>");
 	}
