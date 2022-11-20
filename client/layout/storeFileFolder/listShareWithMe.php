@@ -125,7 +125,7 @@
 		<div class="row">
 
 			<?php if($type_permision == 'USER_PASSWORD' or $type_permision == 'ALL_PASSWORD') { ?>
-				<div class="container">
+			<div class="container">
 					<form action="" method="POST">
 						    <label for=""><b>Xác nhận mật khẩu</b></label>
 							<input type="text" name="password" class="form-control">

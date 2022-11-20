@@ -9,4 +9,14 @@
         $result1 = mysqli_query($conn, $query);
         return $result1;
     }
+
+    
+function findSharePermissionByShareId($conn, $share_id) {
+ 
+	$sql = "SELECT u.username FROM  share_permission sp 
+        inner join `user` u on u.id = sp.user_id
+        where sp.share_id = '$share_id' ";
+	return db_query($conn, $sql);
+}
+
 ?>

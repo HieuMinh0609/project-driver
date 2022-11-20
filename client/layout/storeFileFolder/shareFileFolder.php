@@ -26,7 +26,29 @@
 	<link rel="stylesheet" type="text/css" href="../template/client.css"></link>
 
 </head>
- 
+
+
+<?php 
+                    $isShare = false;
+                    $conn = db_connect();
+
+                        $id_file_folder = escapeGetParam($conn, "id");
+
+                        $itemShare= findShareById($conn, $id_file_folder);
+                        
+                        if(!empty($itemShare)) {
+
+                            $usersPermission = findSharePermissionByShareId($conn, $itemShare['id']);
+   
+                            $isShare = true;
+                        }
+
+                     
+
+                    db_close($conn);
+                
+                ?>
+
 <body>
                 <?php 
                     
@@ -35,6 +57,7 @@
                         $id_file_folder = escapeGetParam($conn, "id");
 
                         $item = findById($conn, $id_file_folder);
+ 
 
                         $url_share = 'http://localhost/project-driver/client/layout/storeFileFolder/fileSearchArea.php?url_share='.md5($item["id"]);
 
@@ -82,10 +105,27 @@
                         db_close($conn);
                     }
 
+                    if(isset($_POST["DELETES"])) {
+                        $conn = db_connect();  
+                            if(deleteByIdFile($conn, $id_file_folder)) {
+                                echo("<br><br><div class=\"container\">
+                                <div class=\"alert alert-success\">
+                                <strong>Thành công!</strong> Xóa thành công!.
+                                </div></div>");
+                            } else {
+                                echo("<br><br><div class=\"container\">
+                                <div class=\"alert alert-warning\">
+                                <strong>Lỗi!</strong> Xóa thất bại!.
+                                </div></div>");
+                            }
+                        db_close($conn);
+                    }
+
+
                 ?>
 
 
-
+<?php if( $isShare == true) { ?>      
     <div class="pt-5">
        <form action="" method="POST">
             <div class="container" >
@@ -93,8 +133,66 @@
                 <div class="mb-3"><h3>Chia sẻ ".   <?php echo $item["name"] ?>."</h3></div>
 
                
-                   
+             
                  
+                <p class="mt-4">Quyền truy cập trung  </p>
+                <select class="form-control type-name" name="type_share">
+                    <option value="<?php echo $itemShare['type_share'] ?>">
+ 
+                    <?php 
+                        if ($itemShare['type_share'] == 'ALL') echo "Bất kì ai có đường liên kết";
+                        else if ($itemShare['type_share'] == 'USER')  echo "Người được thêm vào nhóm";
+                        else if ($itemShare['type_share'] == 'USER_PASSWORD')  echo "Người được thêm vào nhóm và mật khẩu";
+                        else if ($itemShare['type_share'] == 'ALL_PASSWORD')  echo "Bất kì ai có đường liên kết và mật khẩu";
+                    ?>
+                </option>
+                </select>
+
+                <div class="add-member-area mt-2 ">
+                    <div class="  row">
+                        <div class="col-md-10 input-member">
+                        <?php while ($userItem = mysqli_fetch_array($usersPermission)) {?>	
+                            <div class="input_field">
+                                <input  require class="input-account form-control" readonly value="<?php echo $userItem['username'] ?>"  type="text" name="name[]" placeholder="Thêm tài khoản"> 
+                            </div>
+                        <?php } ?>   
+                        </div>
+  
+                    </div>      
+                   
+                </div>
+
+                <?php if( $itemShare['type_share'] == 'USER_PASSWORD' or $itemShare['type_share'] == 'ALL_PASSWORD') { ?>  
+                    <div class="mt-2 password-area" >
+                        <input id="input-password" require readonly class="form-control" value="<?php echo $itemShare['password'] ?>" type="text" name="password" placeholder="Thêm mật khẩu"> 
+                    </div>
+                <?php } ?>   
+
+                <div class="mt-2">
+                    <input id="" name="url_share" readonly class="form-control" type="text" value="<?php echo $url_share ?>"> 
+                </div>
+
+                <button type="submit" name="DELETES" onclick="return confirm('Bạn có chắc chắn muốn xóa ?')"  class="btn btn-warning mt-4">Xóa</button>
+            </div>
+            <button class="btn btn-secondary ">
+                    <a style="color: white" href="/project-driver/client/layout/index.php"> << Quay lại</a>
+            </button>     
+           
+            
+       </form>
+
+         
+    </div>
+ 
+<?php } ?>
+
+<?php if( $isShare == false) { ?> 
+    <div class="pt-5">
+       <form action="" method="POST">
+            <div class="container" >
+
+                <div class="mb-3"><h3>Chia sẻ ".   <?php echo $item["name"] ?>."</h3></div>
+
                 <p class="mt-4">Quyền truy cập trung  </p>
                 <select class="form-control type-name" name="type_share">
                     <option value="ALL">Bất kì ai có đường liên kết</option>
@@ -138,9 +236,8 @@
 
          
     </div>
- 
+<?php } ?>
 
- 
 <script type="text/javascript">
 
     $('.type-name').change(function() {

@@ -6,9 +6,13 @@ function getAllSystemConfig($conn) {
 }
 
 function getSingleSystemConfig($conn, $id) {
- 
 	return db_single($conn, "SELECT * FROM `config_system` WHERE `id` = $id" );
 }
+
+function getSingleSystemConfigByCode($conn, $code) {
+	return db_single($conn, "SELECT * FROM `config_system` WHERE `code` = '$code' " );
+}
+ 
  
 
 function createSystemConfig($conn, $code, $name ,$value) {

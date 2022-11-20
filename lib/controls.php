@@ -52,7 +52,7 @@ function printTable($data, $columns, $editLink = "",$id="", $deleteLink = "",$ed
 		}
 		if($editdetailLink != "") {
 				if ($row['type_store'] == 'FILE') {
-					echo("<td style=\" width: 40px;\" ><a style=\" width: max-content; \" class=\"btn btn-primary\" href=\"$editdetailLink?id={$row["$id"]}\">Chi tiết</a></td>");	
+					echo("<td style=\" width: 40px;\" ><a s	tyle=\" width: max-content; \" class=\"btn btn-primary\" href=\"$editdetailLink?id={$row["$id"]}\">Chi tiết</a></td>");	
 				} else {
 					echo("<td style=\" width: 40px;\" ></td>");	
 				}
