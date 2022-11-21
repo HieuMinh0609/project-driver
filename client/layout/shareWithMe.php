@@ -17,14 +17,13 @@
 <body>
 	
 	<?php include_once('./layout/header.php') ?>
-
+ 	
 	<div class="center">
 		
 		 
 		<?php 
-
-			include_once ('../../lib/db.php');
-			include_once ('../../lib/controls.php');
+			// file khu vực chia sẻ với tôi
+			include_once ('../../lib/db.php');  
 		 
 		 ?>
 

@@ -2,7 +2,7 @@
 
 <?php 
 		include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/db.php");
-		include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/controls.php");
+
 		include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/auth.php");
         include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/service/store_file_folder_service.php");
         include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/upload.php");
@@ -11,6 +11,7 @@
 
 <?php 
    
+   //Tạo folder
    
    if(isset($_POST["CREATES"])) {
  
@@ -23,7 +24,7 @@
         }
 
         $conn = db_connect();
-            saveFolder($conn, $parent_id, escapePostParam($conn, "name"),'FOLDER', $user_id);     
+            saveFolder($conn, $parent_id, escapePostParam($conn, "name"),'FOLDER', $user_id);      //Lưu folder
         db_close($conn);
 
         echo '<script type="text/javascript">alert("Thêm mới thành công")</script>';

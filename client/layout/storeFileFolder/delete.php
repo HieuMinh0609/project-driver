@@ -23,27 +23,30 @@
         doLogout();
 	}
 	
+ 
  ?>
+ 
+
     <div class="pt-5">
         <div class="container-fluid" >
             <div class="center">
 
                 <?php 
                    require('../../../lib/db.php');
-                   require ('../../../lib/controls.php');
                    require ('../../../lib/service/store_file_folder_service.php');
                    require ('../../../lib/service/share_service.php');
                 ?>
 
                 
                 <?php 
-                    
+                       // đoạn code dưới có tác dụng xóa file hoặc folder và xóa các dữ liệu trong bảng share (bảng lưu thông tin chia sẻ của file hoặc folder)
+
                     $conn = db_connect();
                   
                     $id = escapeGetParam($conn, "id");
 
-                    deleteByIdFile($conn, $id);
-                    deletebyId($conn, $id);
+                    deleteByIdFile($conn, $id);  // xóa bảng lưu thông tin chia sẻ của file hoặc folder theo id_file
+                    deletebyId($conn, $id); // xóa file hoặc folder
 
                     if(deletebyId($conn, $id)) {
                         echo("<br><br><div class=\"container\">

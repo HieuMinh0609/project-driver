@@ -23,8 +23,9 @@
 		 
 		<?php 
 
+			// giao diện chính
 			include_once ('../../lib/db.php');
-			include_once ('../../lib/controls.php');
+ 
 		 
 		?>
 

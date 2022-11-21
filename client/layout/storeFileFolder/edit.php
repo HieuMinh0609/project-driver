@@ -32,9 +32,12 @@
 
 <?php 
  
-    if(isset($_POST["UPDATES"])){
+    // Chỉnh sửa folder hoặc file 
+    if(isset($_POST["UPDATES"])) {
 
           $conn = db_connect();
+
+          //Lưu  
             update($conn,$idmember, 
                 escapePostParam($conn, "parent_id"), 
                 escapePostParam($conn,"id"),  escapePostParam($conn,"name"));     
@@ -60,8 +63,8 @@
 
                         $id = escapeGetParam($conn, "id");
 
-                        $item = findById($conn, $id);
-                        $listFolder = findFolderOrFileByProperty($conn, '', 'FOLDER', 0, 9999999);
+                        $item = findById($conn, $id); // lấy thông tin file hoặc folder cần sửa
+                        $listFolder = findFolderOrFileByProperty($conn, '', 'FOLDER', 0, 9999999); // lấy ra tất cả danh sách folder  
 
                     db_close($conn);
                 

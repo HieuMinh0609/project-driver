@@ -2,7 +2,6 @@
 
 <?php 
 		include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/db.php");
-		include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/controls.php");
 		include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/auth.php");
         include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/service/store_file_folder_service.php");
         include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/upload.php");
@@ -11,18 +10,19 @@
 
 <?php 
    
-   
+    // Bắt sự kiện submit tải file
     if(isset($_FILES['files'])) {
-        session_start();
-        $user_id = $_SESSION["id"];
+        session_start(); // Khởi động session
+        $user_id = $_SESSION["id"];   // lấy userid từ session
      
         $parent_id= null;
 
-        if(isset($_GET['parent_id'])) {
+        if(isset($_GET['parent_id'])) {  // lấy thông tin id thư mục cha (nếu có trên url)
             $parent_id = $_GET['parent_id'];
         }
 
-        return json_encode(uploadFiles($_FILES['files'], $parent_id, $user_id));
+        return json_encode(uploadFiles($_FILES['files'], $parent_id, $user_id)); // json_encode là hàm mã hóa dữ liệu về dạng json trước khi return
+        // uploadFiles là hàm tong "/project-driver/lib/upload.php"
      }
  
 ?>
@@ -105,21 +105,27 @@
  
 
 <script type="text/javascript">
-    function _(element) {
+
+//Lấy thông tin khu vực kéo thả
+function _(element) {
     return document.getElementById(element);
 }
 
+
+//Thay màu khu vực nếu có sự kiện kéo
 _('drag_drop').ondragover = function(event) {
     this.style.borderColor = '#333';
     return false;
 }
 
+//Thay màu khu vực nếu mất sự kiện kéo
 _('drag_drop').ondragleave = function(event) {
     this.style.borderColor = '#ccc';
     return false;
 }
 
 
+//Thực hiện logic nếu thả chuột
 _('drag_drop').ondrop = function(event) {
     event.preventDefault();
 
@@ -133,7 +139,7 @@ _('drag_drop').ondrop = function(event) {
 
     for(var count = 0; count < drop_files.length; count++) {
 
-        form_data.append("files[]", drop_files[count]);
+        form_data.append("files[]", drop_files[count]); // add file vào body trước khi submit
         image_number++;
     }
 
@@ -151,11 +157,11 @@ _('drag_drop').ondrop = function(event) {
 
         let id = getUrlParameter("id");
 
-        ajax_request.open("post", "storeFileFolder/uploadFile.php?parent_id="+id);
+        ajax_request.open("post", "storeFileFolder/uploadFile.php?parent_id="+id); // cài đặt kết nối với method post và submit lên file toreFileFolder/uploadFile.php?parent_id="+id
 
         ajax_request.upload.addEventListener('progress', function(event){
 
-            var percent_completed = Math.round((event.loaded / event.total) * 100);
+            var percent_completed = Math.round((event.loaded / event.total) * 100); // lắng nghe sự kiên upload rồi cập nhật tiến trình
 
             _('progress_bar_process').style.width = percent_completed + '%';
 
@@ -163,7 +169,7 @@ _('drag_drop').ondrop = function(event) {
 
         });
 
-        ajax_request.onreadystatechange = function() {
+        ajax_request.onreadystatechange = function() { // hứng kết quả trả về khi upload thành công hoặc thất bại
             if (ajax_request.readyState == XMLHttpRequest.DONE) {
                 _('uploaded_image').innerHTML = '<div class="alert alert-info" style=" width: 100%; ">'+this.responseText.trim()+'</div>';
             } else {
@@ -179,7 +185,7 @@ _('drag_drop').ondrop = function(event) {
         ajax_request.send(form_data);
     }
 
-    function getUrlParameter(sParam) {
+    function getUrlParameter(sParam) { // hàm lấy value từ parameter
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
             sParameterName,

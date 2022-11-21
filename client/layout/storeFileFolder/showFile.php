@@ -17,7 +17,7 @@
 <?php 
 
 	include_once ('../../../lib/db.php');
-	include_once ('../../../lib/controls.php');
+ 
 	include_once ('../../../lib/auth.php');
 	include_once ('../../../lib/service/share_service.php');
 	include_once ('../../../lib/service/store_file_folder_service.php');
@@ -34,6 +34,9 @@
 
 <?php 
 	 startSession();
+
+	 // kiểm tra xem bạn có quyền xem file này ko
+	 // nếu có reutrn true , ko có return false
 	 function isIdParentInCache($parent_id) {
 	
 			if (isset($_SESSION["permisstionFiles"])) {
@@ -48,13 +51,15 @@
  ?>
 
 <?php
+
+	 // bắt submit nhập mật khẩu đối với file yêu cầu nhập mật khẩu
 	 if(isset($_POST["CONFIRM"])) {
 	
 	
 	  $conn = db_connect();
 	  		$parent_id = $_GET['parent_id'] ?? null;
-	  		$password = escapePostParam($conn, "password");
-			$item = isCorrectPasswordShare($conn, $parent_id, $password );
+	  		$password = escapePostParam($conn, "password"); // lấy value password từ form submit method post
+			$item = isCorrectPasswordShare($conn, $parent_id, $password ); // kiểm tra xem mật khẩu nhập vào có đúng ko  ../../../lib/service/share_service.php
  
 			if(empty($item)) {
 					echo("<br><br><div class=\"container\">
@@ -63,7 +68,7 @@
 					</div></div>");
 			} else {
 
-				if (!isIdParentInCache($parent_id)) {
+				if (!isIdParentInCache($parent_id)) { // Lưu session nếu chưa có session của id này
 					$items = $_SESSION["permisstionFiles"] ?? array();
 					$items[] = $parent_id ;
 					$_SESSION["permisstionFiles"] = $items;
@@ -81,31 +86,31 @@
 
         include_once ('../../../lib/auth.php');
 
-        checkLoggedInWeb();
+        checkLoggedInWeb(); //kiểm tra có quyền truy cập web ko
         
         if (isset($_GET['logout']))   {
-            doLogout();
+            doLogout(); //nếu ko có quyền truy cập sẽ bị logout
         }
 
         $checkPermision = false;
 
         $conn = db_connect();
             $id = escapeGetParam($conn, "id");
-            $item = findById($conn, $id);
+            $item = findById($conn, $id); // lấy thông tin file chia sẻ
 
-            $item_share = findShareById($conn, $id);
+            $item_share = findShareById($conn, $id); // lấy thông tin row table share lưu thông tin type_share, url, password
 
             $type_permision = "ALL";
-			$isIdParentInCache = isIdParentInCache($id);	
+			$isIdParentInCache = isIdParentInCache($id);	// kiểm tra xem bạn có quyền xem file này ko
 
-			if (!empty($parent_id)) {
+			if (!empty($parent_id)) {  //kiểm tra xe 
 				$file_folder = findById($con, $id);
 				// $name_parrent = "Tệp tin cha: ".$file_folder['name'];
 
 				if (!$isIdParentInCache) {
  
 					
-					if (!empty($item_share)) {
+					if (!empty($item_share)) { 
 						
 						$type_permision = $item_share['type_share'];
 					}
@@ -116,7 +121,7 @@
 
         db_close($conn);
  
-        $fileLocation =  "http://localhost/project-driver/lib/upload/" . $item['name'];
+        $fileLocation =  "http://localhost/project-driver/lib/upload/" . $item['name']; // gán url share 
         
     ?>
 

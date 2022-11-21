@@ -32,11 +32,11 @@
                     
                     $conn = db_connect();
 
-                        $id_file_folder = escapeGetParam($conn, "id");
+                        $id_file_folder = escapeGetParam($conn, "id"); //lấy id file từ url
 
-                        $item = findById($conn, $id_file_folder);
+                        $item = findById($conn, $id_file_folder); // lấy thông tin file
 
-                        $url_share = 'http://localhost/project-driver/client/layout/storeFileFolder/fileSearchArea.php?url_share='.md5($item["id"]);
+                        $url_share = 'http://localhost/project-driver/client/layout/storeFileFolder/fileSearchArea.php?url_share='.md5($item["id"]); // tạo url shares
 
                     db_close($conn);
                 
@@ -44,26 +44,29 @@
 
                 <?php 
                 
+
+                    // bắt sự kiện tạo chia sẻ 
                     if(isset($_POST["CREATES"])) {
                         $conn = db_connect();
                             
                             startSession();
-                            $user_id = $_SESSION["id"];
+                            $user_id = $_SESSION["id"]; //lấy id user từ session
 
                            
 
-                            $result = createShare($conn, $id_file_folder, escapePostParam($conn, "url_share"),
+                            $result = createShare($conn, $id_file_folder, escapePostParam($conn, "url_share"),  //lấy các thông tin từ form submit
                                     escapePostParam($conn, "type_share"), escapePostParam($conn, "password"));
 
-                          
+                            
 
-                            if (isset($result)) {
+                            if (isset($result)) { // kiểm tra xem dữ liệu đã được insert hay chưa
                         
-                                if (escapePostParam($conn, "type_share") == 'USER' or  escapePostParam($conn, "type_share") == 'USER_PASSWORD') {
+                                if (escapePostParam($conn, "type_share") == 'USER' or  escapePostParam($conn, "type_share") == 'USER_PASSWORD') {  //nếu type_share = USER( theo người dùng) hoặc = USER_PASSWORD (theo người dùng hoặc mật khẩu) thì
+                                    // sẽ không cần lưu người chia sẻ 
                                     $names = $_POST["name"];
                            
                                     for($i = 0; $i < count($names); $i++) {
-                                        $user = getSingleUserByUser($conn, $names[$i]);
+                                        $user = getSingleUserByUser($conn, $names[$i]); // lưu tài khoản được chia sẻ
                                         if (isset($user)) {
                                            
                                             

@@ -34,6 +34,8 @@
 ?>
 
 <?php 
+
+// đoạn code này có tác dụng kiểm tra url chia sẻ nếu đúng sẽ add user vào bằng share_permission => user có quyền truy cập folder hoặc xem file
     
     $url_share = $_GET['url_share'] ?? null;
  
@@ -45,10 +47,11 @@
             if (!empty($item)) {
 
                 $user_id = $_SESSION["id"];
-                createSharePermission($conn, $item['id'], $user_id );
+                createSharePermission($conn, $item['id'], $user_id ); //  add user vào bằng share_permission =
                 $file_or_folder = findById($conn, $item['id_store_file_folder']);
                 echo $file_or_folder;
-                if ($file_or_folder['type_store'] == 'FOLDER') {
+                if ($file_or_folder['type_store'] == 'FOLDER') { // kiểm tra xem nếu file chia sẻ là FOLDER thì điều hướng về trang hiển thị thư mục 
+                    // nếu là FILE thì sẽ hiển thị file
                     redirect("./shareWithMe.php?parent_id=".$file_or_folder['id']);
                 } else {
                     redirect("./showFile.php?id=".$file_or_folder['id']);

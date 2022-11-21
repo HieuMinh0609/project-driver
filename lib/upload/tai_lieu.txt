@@ -1,0 +1,11 @@
+1. Web hỗ trợ khách hàng
+	- danh sách địa bàn hạn chế chấp nhận được cập nhật hằng ngày qua google sheet
+	- kết nối api gửi Form  thông tin thay đổi lên CMS 
+	- Hiển thị danh sách thông tin dịch vụ,... các địa bàn bị ảnh hưởng thông qua kết nối tới api phía DVBC
+2. web hỗ trợ cccd
+	backend
+		- Xây dựng api lấy danh sách các tỉnh thành, huyện, xã
+		- Xây dựng api tìm kiếm thông tin khách hàng chính xác
+		- kết nối api gửi Form  thông tin thay đổi lên CMS 
+		
+		

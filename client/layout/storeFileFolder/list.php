@@ -12,54 +12,23 @@
 <?php 
 	
 		include_once ('../../lib/db.php');
-		include_once ('../../lib/controls.php');
+ 
 		include_once ('../../lib/auth.php');
         include_once ('../../lib/service/store_file_folder_service.php');
 
 		$limit = 999999;
-		$name_search = $_GET['name'] ?? null;
+		$name_search = $_GET['name'] ?? null; // lấy thông tin tìm kiếm  name  từ url
 		$parent_id = $_GET['parent_id'] ?? null;
 
 		$con = db_connect();
 
 
 			if (!empty($parent_id)) {
-				$file_folder = findById($con, $parent_id);
+				$file_folder = findById($con, $parent_id); // lấy thông tin folder parent_id nếu dó
  
 			}
-	 
-			$countFolder = countFolderOrFileByProperty($con, $name_search, 'FOLDER');
-
-			$rowFolder = mysqli_fetch_assoc($countFolder);
-			$total_record_folder = $rowFolder['total'];
-
-			$current_page_folder = isset($_GET['page']) ? $_GET['page'] : 1;
-			$total_page_folder = ceil($current_page_folder / $limit);
-
-			if ($current_page_folder > $total_page_folder) $current_page_folder = $total_page_folder;
-			else if ($current_page_folder < 1)  $current_page_folder = 1;
-			
-
-			$startPageFolder = ($current_page_folder - 1) * $limit;
-
-			$listFolder = findFolderOrFileByProperty($con,$name_search, $parent_id, 'FOLDER',$startPageFolder, $limit);
-
-	
-			$countFile = countFolderOrFileByProperty($con, $name_search, 'FILE');
-
-			$rowFile = mysqli_fetch_assoc($countFile);
-			$total_record_file = $rowFile['total'];
-
-			$current_page_file = isset($_GET['page']) ? $_GET['page'] : 1;
-			$total_page_file = ceil($current_page_file / $limit);
-
-			if ($current_page_file > $total_page_file) $current_page_file = $total_page_file;
-			else if ($current_page_file < 1)  $current_page_file = 1;
-			
-
-			$startPageFile = ($current_page_file - 1) * $limit;
-
-			$listFile= findFolderOrFileByProperty($con,$name_search, $parent_id, 'FILE',$startPageFile, $limit);
+			$listFolder = findFolderOrFileByProperty($con,$name_search, $parent_id, 'FOLDER',0, 99999); //lấy danh sách folder
+			$listFile= findFolderOrFileByProperty($con,$name_search, $parent_id, 'FILE',0, 99999); //lấy danh sách file
 
 		db_close($con);
  
@@ -129,7 +98,7 @@
 		<div class="row mt-5">
 		
 			<div class="col-md-12 mb-2"><b>Danh sách tài liệu</b></div>
-			<?php while ($item = mysqli_fetch_array($listFile)) {
+			<?php while ($item = mysqli_fetch_array($listFile)) { //hiển thị danh sách
 				?>	
 				 	<div class="col-lg-2 col-md-4">
 						<div class="card">

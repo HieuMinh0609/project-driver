@@ -1,10 +1,10 @@
 <?php 
 
-	include_once ('../../lib/db.php');
-	include_once ('../../lib/controls.php');
-	include_once ('../../lib/auth.php');
-	include_once ('../../lib/service/share_service.php');
-	include_once ('../../lib/service/store_file_folder_service.php');
+	include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/db.php");
+ 
+	include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/auth.php");
+	include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/service/share_service.php");
+	include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/service/store_file_folder_service.php");
 
 
 	
@@ -17,6 +17,9 @@
  ?>
 
 <?php 
+
+//các bước kiểm tra này giống phần kiểm tra hiển thị file ./showFile.php
+
 	 startSession();
 	 function isIdParentInCache($parent_id) {
 	
