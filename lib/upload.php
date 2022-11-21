@@ -10,7 +10,7 @@ function checkFileSize($sizeFile) {
         $item = getSingleSystemConfigByCode($conn, "MAX_SIZE_FILE");
     db_close($conn);
   
-        if ((int) $item["value"] >=  $sizeFile ) {
+        if ((int) $item["value"] <   $sizeFile ) {
             return false;
         }
     return true;    
@@ -21,9 +21,9 @@ function checkFormatImage($fileType) {
         $item = getSingleSystemConfigByCode($conn, "FILE_NO_UPLOAD");
     db_close($conn);
 
-    $dataTypes =  explode("\,", $item['value']); 
- 
-    if( in_array( $fileType ,$dataTypes ) ) {
+    $dataTypes =  explode(",", $item['value']); 
+  
+    if( in_array( '.'.$fileType ,$dataTypes ) ) {
         return false;
     }
     return true;    
@@ -40,21 +40,17 @@ function uploadFiles($files, $parent_id, $user_id) {
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
  
         // Check file size
-        if (checkFileSize($files["size"][$count] )) {
+        if (!checkFileSize($files["size"][$count] )) {
             echo " File quá lớn<br>";
             $uploadOk = 0;
         }
 
-        if (checkFormatImage($files["size"][$count] )) {
-            echo " File quá lớn<br>";
+        if (!checkFormatImage($imageFileType)) {
+            echo " File không đúng định dạng<br>";
             $uploadOk = 0;
         }
 
-        // Allow certain file formats
-        if( checkFormatImage($imageFileType)) {
-            echo "File tải lên không đúng định dạng<br>";
-            $uploadOk = 0;
-        }
+       
 
  
         // Check if $uploadOk is set to 0 by an error

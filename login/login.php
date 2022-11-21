@@ -15,15 +15,20 @@
 <body>
     <div class="container">
 <?php
+
+    // import các thư viện liên quan
     include '../lib/auth.php';
     require_once("../lib/db.php");
     require("../lib/service/user_service.php");
 
 
 
+// bắt sự kiện đăng ký  
 if(isset($_POST['register'])){
     $timenow = date('Y-m-d H:i:s');
-    $conn = db_connect();
+    $conn = db_connect(); //kết nối tới databse
+
+        //Hàm tạo tài khoản
         createUser($conn, 
             escapePostParam($conn, "username"), 
             md5(escapePostParam($conn,"password")), 
@@ -34,8 +39,9 @@ if(isset($_POST['register'])){
             escapePostParam($conn,"gender"), 
             escapePostParam($conn,"full_name"),
             $timenow, 'USER');    
+
     $resultMess ="Đăng ký thành công !";
-    db_close($conn);
+    db_close($conn); //đóng kiết nối tới databse
 }
 
 
@@ -53,7 +59,7 @@ if(isset($_POST['register'])){
         }
         if($resultMess==""){
               if('ADMIN'==$result){
-            redirect("../admin/viewhome/HomePage.php");
+            redirect("../admin/layout/index.php");
         }else if('USER'==$result) {
             redirect("../client/layout/index.php");
         }
@@ -79,7 +85,7 @@ if(isset($_POST['register'])){
         }
         if($resultMess==""){
               if('ADMIN'==$result){
-            redirect("../admin/viewhome/HomePage.php");
+                redirect("../admin/layout/index.php");
         }else if('USER'==$result) {
             redirect("../client/layout/index.php");
         }

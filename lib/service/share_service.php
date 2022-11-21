@@ -69,13 +69,13 @@ function db_query_share($conn, $query) {
 	$result1 = mysqli_query($conn, $query);
 
 	if(!$result1) {
-		  echo ("<br><div class=\"alert alert-danger alert-dismissible fade in\">
+		  echo ("<br><div class=\"alert alert-danger alert-dismissible \">
         <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</button>
         <strong>Lỗi!</strong> Có lỗi sảy ra
         </div>");
         
 	} else {
-		 echo ("<br><div class=\"alert alert-success alert-dismissible fade in\">
+		 echo ("<br><div class=\"alert alert-success alert-dismissible\">
         <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</button>
         <strong>Thành công!</strong>  Bạn đã thực hiện thành công !
         </div>");

@@ -62,8 +62,7 @@
 						<div class="btn-group dropleft" style="float:right">
 						<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<?php
-								include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/auth.php");
-				 
+							 
 								include_once ($_SERVER["DOCUMENT_ROOT"] ."/project-driver/lib/db.php");
 								$username = getLoggedInUser();
 								echo $username;
