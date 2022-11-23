@@ -88,9 +88,13 @@
                             </div>
                             <div id="uploaded_image" class="row mt-5"></div>
                     </div>
-                
+                    <label for="upload">
+                            <button type="button" class="btn btn-secondary" ><input  type="file" id="upload-btn" multiple>Upload Files</button>
+                    </label>
                 </div>
                 <div class="modal-footer">
+                       
+
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
  
                     </div>
@@ -179,7 +183,10 @@ _('drag_drop').ondrop = function(event) {
         ajax_request.send(form_data);
     }
 
-    function getUrlParameter(sParam) {
+}
+
+
+function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
             sParameterName,
@@ -194,7 +201,67 @@ _('drag_drop').ondrop = function(event) {
         }
         return "";
     }
-}
+
+// event handlers
+$("#upload-btn").change(function(e) {
+    let  files  = document.getElementById("upload-btn").files;
+	let drop_files = Array.from(files);
+
+    var form_data  = new FormData();
+    var image_number = 1; 
+    for(var count = 0; count < drop_files.length; count++) {
+
+    form_data.append("files[]", drop_files[count]);
+    image_number++;
+    }
+
+    let error = '';
+
+    if(error != '') {
+    _('uploaded_image').innerHTML = error;
+    _('drag_drop').style.borderColor = '#ccc';
+    }
+    else {
+
+
+
+    _('progress_bar').style.display = 'block';
+
+    var ajax_request = new XMLHttpRequest();
+
+    let id = getUrlParameter("id");
+
+    ajax_request.open("post", "storeFileFolder/uploadFile.php?parent_id="+id);
+
+    ajax_request.upload.addEventListener('progress', function(event){
+
+        var percent_completed = Math.round((event.loaded / event.total) * 100);
+
+        _('progress_bar_process').style.width = percent_completed + '%';
+
+        _('progress_bar_process').innerHTML = percent_completed + '% completed';
+
+    });
+
+    ajax_request.onreadystatechange = function() {
+        if (ajax_request.readyState == XMLHttpRequest.DONE) {
+            _('uploaded_image').innerHTML = '<div class="alert alert-info" style=" width: 100%; ">'+this.responseText.trim()+'</div>';
+        } else {
+            _('uploaded_image').innerHTML = '<div class="alert alert-danger" style=" width: 100%; ">File upload thất bại </div>';
+            _('drag_drop').style.borderColor = '#ccc';
+        }
+    }
+
+
+
+    form_data.append("id", 123);
+    console.log(form_data);
+    ajax_request.send(form_data);
+    }
+
+     
+    
+});
 </script>
 
 </body>
