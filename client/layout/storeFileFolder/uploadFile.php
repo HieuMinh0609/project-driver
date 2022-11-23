@@ -204,6 +204,7 @@ function getUrlParameter(sParam) {
 
 // event handlers
 $("#upload-btn").change(function(e) {
+    _('progress_bar_process').style.width = 0 + '%';
     let  files  = document.getElementById("upload-btn").files;
 	let drop_files = Array.from(files);
 
